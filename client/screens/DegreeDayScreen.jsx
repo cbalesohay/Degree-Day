@@ -37,18 +37,9 @@ export const DegreeDayScreen = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // if (degreeDayWC == null || degreeDayWC == '') {
-    //   return;
-    // }
     setDateParsed(parseDate(date));
     setLoading(true);
     setDegreeDayWC(100);
-    // setDegreeDayWC(DisplayData(dateParsed, 'WesternCherry', 'dayDegreeDay'));
-    // setDegreeDayLR(DisplayData(dateParsed, "LeafRollers", 'dayDegreeDay'));
-    // setDegreeDayCM(DisplayData(dateParsed, "CodlingMoth", 'dayDegreeDay'));
-    // setDegreeDayAS(DisplayData(dateParsed, "AppleScab", 'dayDegreeDay'));
-    // setTempatureLow(DisplayData(dateParsed, 'Temperature', 'dayLow'));
-    // setTempatureHigh(DisplayData(dateParsed, 'Temperature', 'dayHigh'));
     setLoading(false);
     return () => {};
   }, [date]);
@@ -58,21 +49,6 @@ export const DegreeDayScreen = () => {
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Degree Day</Text>
         <View>
-          {/* {!loading ? (
-            <DegreeTiles
-              name={'Western Cherry'}
-              nameData={'WesternCherry'}
-              degreeDays={degreeDayWC}
-              tempLow={tempatureLow}
-              tempHigh={tempatureHigh}
-            />
-          ) : (
-            <>
-            <LoadingDegreeTiles />
-            <Text style={styles.date}>Hellos</Text>
-            
-            </>
-          )} */}
           {metricsData.map(metric => (
             <DegreeTiles
               key={metric.id}
@@ -87,17 +63,6 @@ export const DegreeDayScreen = () => {
               tempHigh={DisplayData(dateParsed, 'Temperature', 'dayHigh')}
             />
           ))}
-          {/* {metricsData.map(metric => (
-            <DegreeTiles
-              key={metric.id}
-              name={`${metric.name}`}
-              nameData={metric.nameData}
-              degreeDays={degreeDayWC}
-              tempLow={tempatureLow}
-              tempHigh={tempatureHigh}
-            />
-          ))} */}
-          ;
           <View style={{paddingTop: 30}}>
             <Text style={styles.sectionTitle}>For Testing Purposes!!!</Text>
             <SelectDate date={date} setDate={setDate}>
@@ -108,14 +73,6 @@ export const DegreeDayScreen = () => {
           </View>
         </View>
       </View>
-      {/* <View style={styles.sectionContainer}>
-        <MetricTile
-          humidity={DisplayData(dateParsed, 'Humidity', 'dayAverage')}
-          rain={DisplayData(dateParsed, 'Rain', 'dayRainfall')}
-          highTemp={DisplayData(dateParsed, 'Temperature', 'dayHigh')}
-          lowTemp={DisplayData(dateParsed, 'Temperature', 'dayLow')}
-        />
-      </View> */}
     </>
   );
 };

@@ -1,26 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRequest, fetchSuccess, fetchFailure } from './actions'; // Import Redux actions
+import {API_URL} from '@env'; // Import API_URL from .env file
 
 export const FetchData = (selectedDate, selectedSpecies, selectedReqData) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
-  const url = 'https://degreeday.onrender.com/post';
-  // const url = 'http://loacalhost:8080/get';
   const info = {
     date: selectedDate,
     species: selectedSpecies,
     reqData: selectedReqData,
   };
-
   const fetchData = async (info) => {
     setIsLoading(true);
     setIsError(false);  // Reset error state before starting the request
     setError('');
     try {
-      const response = await fetch(url, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
