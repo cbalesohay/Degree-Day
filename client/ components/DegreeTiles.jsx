@@ -16,6 +16,7 @@ import {
   spotifyGreen,
 } from '../constants/constants';
 import BouncingLoader from './BouncingLoader';
+import { LoadingDegreeTiles } from './LoadingDegreeTile';
 
 export const DegreeTiles = ({
   name,
@@ -24,33 +25,45 @@ export const DegreeTiles = ({
   tempLow,
   tempHigh,
 }) => {
-  const [degreeDaysLoading, setDegreeDaysLoading] = useState(true);
-  const [tempLowLoading, setTempLowLoading] = useState(true);
-  const [tempHighLoading, setTempHighLoading] = useState(true);
+  const [degreeDay, setDegreeDay] = useState('');
+  const [tempatureLow, setTempatureLow] = useState('');
+  const [tempatureHigh, setTempatureHigh] = useState('');
+  const [noData, setNoData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (degreeDays !== true) setDegreeDaysLoading(false);
-    if (tempLow !== true) setTempLowLoading(false);
-    if (tempHigh !== true) setTempHighLoading(false);
-  }, [degreeDays, tempLow, tempHigh]);
-  if (degreeDays == true){
-    console.log('Degree Days is true');
-  }
-  if (degreeDays == false){
-    console.log('Degree Days is false');
-  }
-  // Check if all the data is loaded
-  const allDataLoaded =
-    !degreeDaysLoading && !tempLowLoading && !tempHighLoading;
-    if (allDataLoaded){
-      console.log('All data loaded');
+    setLoading(true);
+    if ((degreeDays !== true, tempLow !== true, tempHigh !== true)) {
+      setDegreeDay(degreeDays);
+      setTempatureLow(tempLow);
+      setTempatureHigh(tempHigh);
+      setNoData(false);
+      setLoading(false);
+    } else {
+      setNoData(true);
+      setLoading(false);
     }
+
+  }, [degreeDays, tempLow, tempHigh]);
+  if (degreeDays == true) {
+    // console.log('Degree Days is true');
+    console.log(name + ' is true!');
+  }
+  if (degreeDays == false) {
+    // console.log('Degree Days is false');
+    console.log(name + ' is false!');
+  }
+
+  // Check if all the data is available
+  if (!noData) {
+    console.log('All data loaded');
+  }
 
   return (
     <TouchableOpacity
-      style={[styles.tile, !allDataLoaded && styles.loadingTile]} // Apply loading style if not loaded
+      // style={[styles.tile]}
       onPress={() => {
-        if (allDataLoaded) {
+        if (!noData) {
           navigation.navigate('Individual', {
             name: name,
             nameData: nameData,
@@ -60,54 +73,51 @@ export const DegreeTiles = ({
           });
         }
       }}
-      disabled={!allDataLoaded} // Disable button when data is loading
+      disabled={noData} // Disable button when data is loading
     >
-      {/* Left side: Display the name, location, and temperature */}
-      <View style={styles.leftSide}>
-        <Text style={styles.name}>{allDataLoaded ? name : 'Loading...'}</Text>
-        <Text style={styles.location}>Sandpoint, ID</Text>
-        <View style={styles.tempContainer}>
-          <Text style={styles.tempMetric}>
-            {allDataLoaded ? (
-              <>
-                {'L'}
-                <Text style={styles.colon}>:</Text>
-                {tempLow}
-              </>
-            ) : (
-              'Loading...'
-            )}
-          </Text>
-          <Text style={styles.tempMetric}>
-            {allDataLoaded ? (
-              <>
-                {' H'}
-                <Text style={styles.colon}>:</Text>
-                {tempHigh}
-              </>
-            ) : (
-              'Loading...'
-            )}
-          </Text>
-        </View>
-      </View>
-
-      {/* Right side: Display only the degreeDays */}
-      <View style={styles.rightSide}>
-        <Text>
-          {allDataLoaded ? (
-            <>
-              <Text style={styles.degreeDayMetric}>
-                {degreeDays}
-                <Text style={{fontSize: 10}}> DDA</Text>
+      {!loading ? (
+        <View style={styles.tile}>
+          {/* Left side: Display the name, location, and temperature */}
+          <View style={styles.leftSide}>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.location}>Sandpoint, ID</Text>
+            <View style={styles.tempContainer}>
+              <Text style={styles.tempMetric}>
+                {!noData ? (
+                  <>
+                    {'L'}
+                    <Text style={styles.colon}>:</Text>
+                    {tempatureLow}
+                    {' H'}
+                    <Text style={styles.colon}>:</Text>
+                    {tempatureHigh}
+                  </>
+                ) : (
+                  'No data'
+                )}
               </Text>
-            </>
-          ) : (
-            <Text>Hello</Text>
-            // 'Loading...'
-          )}
-        </Text>
-      </View>
+            </View>
+          </View>
+
+          {/* Right side: Display only the degreeDays */}
+          <View style={styles.rightSide}>
+            {!noData ? (
+              <>
+                <Text style={styles.degreeDayMetric}>
+                  {degreeDay}
+                  <Text style={{fontSize: 10}}> DDA</Text>
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.degreeDayNoData}>No data</Text>
+              </>
+            )}
+          </View>
+        </View>
+      ) : (
+        <LoadingDegreeTiles/>
+      )}
     </TouchableOpacity>
   );
 };
@@ -154,6 +164,12 @@ const styles = StyleSheet.create({
   },
   degreeDayMetric: {
     fontSize: 40,
+    fontWeight: 400,
+    color: spotifyWhite,
+    textAlign: 'right',
+  },
+  degreeDayNoData: {
+    fontSize: 20,
     fontWeight: 400,
     color: spotifyWhite,
     textAlign: 'right',
