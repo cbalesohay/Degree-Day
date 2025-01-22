@@ -9,5 +9,6 @@
 
 ## Current UI of App
 
-<img src="https://github.com/user-attachments/assets/1bf5e667-a0bc-41bf-a0fe-c05483be906e" width="250" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
+<img src="https://github.com/user-attachments/assets/1bf5e667-a0bc-41bf-a0fe-c05483be906e" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 
+<img src="https://github.com/user-attachments/assets/bc30c1c9-5710-4a2a-a3c3-0e32a3436abf" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
