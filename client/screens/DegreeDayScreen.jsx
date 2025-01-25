@@ -11,6 +11,8 @@ import {
 import {StyleSheet, Text, View, Button, ActivityIndicator} from 'react-native';
 import {DisplayData} from '../ components/DisplayData';
 import {LoadingDegreeTiles} from '../ components/LoadingDegreeTile';
+import {useFilterStore} from '../stores/useFilterStore';
+import {Display} from '../ components/Display';
 
 export const DegreeDayScreen = () => {
   const [date, setDate] = useState(new Date());
@@ -23,10 +25,10 @@ export const DegreeDayScreen = () => {
     return formattedDate;
   };
 
-  useEffect(() => {
-    setDateParsed(parseDate(date));
-    return () => {};
-  }, [date]);
+  // useEffect(() => {
+  //   setDateParsed(parseDate(date));
+  //   return () => {};
+  // }, [date]);
 
   const [degreeDayWC, setDegreeDayWC] = useState(0);
   const [degreeDayLR, setDegreeDayLR] = useState('');
@@ -35,6 +37,8 @@ export const DegreeDayScreen = () => {
   const [tempatureLow, setTempatureLow] = useState(0);
   const [tempatureHigh, setTempatureHigh] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const filters = useFilterStore(state => state.filters);
 
   useEffect(() => {
     setDateParsed(parseDate(date));
@@ -49,20 +53,45 @@ export const DegreeDayScreen = () => {
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Degree Day</Text>
         <View>
-          {metricsData.map(metric => (
+          {/* {metricsData.map(metric => (
             <DegreeTiles
               key={metric.id}
               name={`${metric.name}`}
               nameData={metric.nameData}
-              degreeDays={DisplayData(
+              degreeDays={Display(
                 dateParsed,
                 metric.nameData,
+                'dayDegreeDay',
+              )}
+              tempLow={Display(dateParsed, 'Temperature', 'dayLow')}
+              tempHigh={Display(dateParsed, 'Temperature', 'dayHigh')}
+            />
+          ))}, */}
+          {filters.map(filter => (
+            <DegreeTiles
+              key={filter.type}
+              name={`${filter.name}`}
+              nameData={filter.type}
+              degreeDays={Display(dateParsed, filter.type, 'dayDegreeDay')}
+              tempLow={Display(dateParsed, 'Temperature', 'dayLow')}
+              tempHigh={Display(dateParsed, 'Temperature', 'dayHigh')}
+            />
+          ))}
+          <Text>Hello</Text>
+          {/* {filters.map((filter) => (
+            <DegreeTiles
+              key={filter.type}
+              name={`${filter.name}`}
+              nameData={filter.type}
+              degreeDays={DisplayData(
+                dateParsed,
+                filter.type,
                 'dayDegreeDay',
               )}
               tempLow={DisplayData(dateParsed, 'Temperature', 'dayLow')}
               tempHigh={DisplayData(dateParsed, 'Temperature', 'dayHigh')}
             />
-          ))}
+          ))} */}
           <View style={{paddingTop: 30}}>
             <Text style={styles.sectionTitle}>For Testing Purposes!!!</Text>
             <SelectDate date={date} setDate={setDate}>

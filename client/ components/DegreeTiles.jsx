@@ -45,14 +45,6 @@ export const DegreeTiles = ({
     }
 
   }, [degreeDays, tempLow, tempHigh]);
-  if (degreeDays == true) {
-    // console.log('Degree Days is true');
-    console.log(name + ' is true!');
-  }
-  if (degreeDays == false) {
-    // console.log('Degree Days is false');
-    console.log(name + ' is false!');
-  }
 
   // Check if all the data is available
   if (!noData) {
@@ -62,17 +54,17 @@ export const DegreeTiles = ({
   return (
     <TouchableOpacity
       // style={[styles.tile]}
-      onPress={() => {
-        if (!noData) {
-          navigation.navigate('Individual', {
-            name: name,
-            nameData: nameData,
-            degreeDays: degreeDays,
-            tempLow: tempLow,
-            tempHigh: tempHigh,
-          });
-        }
-      }}
+      // onPress={() => {
+      //   if (!noData) {
+      //     navigation.navigate('Individual', {
+      //       name: name,
+      //       nameData: nameData,
+      //       degreeDays: degreeDays,
+      //       tempLow: tempLow,
+      //       tempHigh: tempHigh,
+      //     });
+      //   }
+      // }}
       disabled={noData} // Disable button when data is loading
     >
       {!loading ? (

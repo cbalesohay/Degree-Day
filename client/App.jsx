@@ -28,6 +28,7 @@ import {Provider} from 'react-redux';
 import store from './redux/store';
 import { TestScreen } from './screens/TestScreen';
 import { IndividualInfoScreen } from './screens/IndividualInfoScreen';
+import { DegreeDay } from './ components/DegreeDay';
 
 function App() {
   const backgroundStyle = {
@@ -59,7 +60,8 @@ function App() {
             style={{
               flex: 1, // This will make the view take up 100% of the available space
             }}>
-            <DegreeDayScreen />
+            {/* <DegreeDayScreen /> */}
+            <DegreeDay />
             {/* <IndividualInfoScreen /> */}
           </View>
         </ScrollView>
