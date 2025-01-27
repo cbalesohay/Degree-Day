@@ -1,6 +1,8 @@
 import {create} from 'zustand';
 import {produce} from 'immer';
 import zustandStorage from './storage';
+import { DegreeDay } from '../ components/DegreeDay';
+import { Fetch } from '../hooks/Fetch';
 
 export interface FilterState {
   type: string;
@@ -13,6 +15,7 @@ export interface FilterState {
 interface FilterStore {
   filters: FilterState[];
   setFilters: (filters: FilterState[]) => void;
+  updateDegreeDays: (type: FilterState["type"], degreeDays: FilterState["degreeDays"]) => void;
   updateFilterSelection: (type: string, selectedItems: string[]) => void;
   toggleFilterSelection: (type: string) => void;
   resetFilters: () => void;
@@ -54,6 +57,18 @@ const initialFilters: FilterState[] = [
 export const useStore = create<FilterStore>(set => ({
   filters: initialFilters,
   setFilters: filters => set({filters}),
+  updateDegreeDays: (type, degreeDays) =>
+    set(
+      produce(state => {
+        const filter = state.filters.find(f => f.type == type);
+        console.log(type);
+        console.log(degreeDays);
+        if(filter) filter.degreeDays = degreeDays;
+      }),
+    ),
+
+
+  
   updateFilterSelection: (type, selectedItems) =>
     set(
       produce(state => {

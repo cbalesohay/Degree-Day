@@ -22,14 +22,20 @@ export const DegreeDay = () => {
   const {filters} = useStore();
   const {temps} = useTempature();
   const {data, isLoading, isError, fetchData} = useDataStore();
+  const updateDDays = useStore((state) => state.updateDegreeDays);
 
   // Need to call the fetchData function from useFetch.tx
   useEffect(() => {
     setDateParsed(parseDate(date));
     filters.forEach(filter => {
-      fetchData(dateParsed, filter.type, 'dayDegreeDay');
+      
+      fetchData(dateParsed, filter.type, 'dayDegreeDay').then((result) => {
+
+        updateDDays(filter.type, result);
+
+      });
     });
-  }, [dateParsed, fetchData, filters, date]);
+  }, [date]);
 
   return (
     <>

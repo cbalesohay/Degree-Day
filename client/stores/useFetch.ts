@@ -7,7 +7,7 @@ interface DataStoreState {
   data: number;
   isLoading: boolean;
   isError: boolean | null;
-  fetchData: (param1: string, param2: string, param3: string) => Promise<void>;
+  fetchData: (param1: string, param2: string, param3: string) => Promise<number>;
 }
 
 export const useDataStore = create<DataStoreState>((set) => ({
@@ -34,9 +34,11 @@ export const useDataStore = create<DataStoreState>((set) => ({
       const data = Number(json);
       set({ data, isLoading: false, isError: null });
       console.log("Fetched Data:", data);
+      return data;
     } catch (error) {
       console.error("Error occurred:", error);
       set({ isLoading: false, isError: true });
+      return -1;
     }
   },
 }));
