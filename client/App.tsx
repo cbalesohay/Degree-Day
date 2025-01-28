@@ -8,6 +8,7 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import {DegreeDayScreen} from './screens/DegreeDayScreen';
+import {IndividualInfoScreen} from './screens/IndividualInfoScreen';
 import {
   backgroundColorPrimary,
   spotifyBlack,
@@ -22,13 +23,6 @@ import {
   View,
 } from 'react-native';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// import {IndividualInfoScreen} from './screens/IndividualInfoScreen';
-
-import {Provider} from 'react-redux';
-import store from './redux/store';
-import { TestScreen } from './screens/TestScreen';
-import { IndividualInfoScreen } from './screens/IndividualInfoScreen';
-import { DegreeDay } from './ components/DegreeDay';
 
 function App() {
   const backgroundStyle = {
@@ -47,33 +41,30 @@ function App() {
   // }
 
   return (
-
     <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          // barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <View
-            style={{
-              flex: 1, // This will make the view take up 100% of the available space
-            }}>
-            {/* <DegreeDayScreen /> */}
-            <DegreeDay />
-            {/* <IndividualInfoScreen /> */}
-          </View>
-        </ScrollView>
+      <StatusBar
+        // barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <View
+          style={{
+            flex: 1, // This will make the view take up 100% of the available space
+          }}>
+          <DegreeDayScreen />
+          
+          <IndividualInfoScreen />
+        </View>
+      </ScrollView>
 
       {/* <View style={{flex: 1}}>
         <NavigationContainer>
           <RootStack />
         </NavigationContainer>
       </View> */}
-
     </SafeAreaView>
-
 
     // <Provider store={store}>
     //   <SafeAreaView style={backgroundStyle}>

@@ -15,7 +15,6 @@ import {
   spotifyWhite,
   spotifyGreen,
 } from '../constants/constants';
-import BouncingLoader from './BouncingLoader';
 
 export const LoadingDegreeTiles = () => {
   return (

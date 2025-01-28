@@ -33,10 +33,9 @@ export const useDataStore = create<DataStoreState>((set) => ({
       const json = await response.json();
       const data = Number(json);
       set({ data, isLoading: false, isError: null });
-      console.log("Fetched Data:", data);
-      return data;
+      return Math.round(data);
     } catch (error) {
-      console.error("Error occurred:", error);
+      console.log("Error occurred:", error);
       set({ isLoading: false, isError: true });
       return -1;
     }

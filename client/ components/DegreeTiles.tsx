@@ -9,56 +9,41 @@ import {
 } from 'react-native';
 const {width} = Dimensions.get('window');
 import {
-  tileTextColorPrimary,
   spotifyDarkGrey,
-  spotifyLightGrey,
   spotifyWhite,
   spotifyGreen,
 } from '../constants/constants';
-import BouncingLoader from './BouncingLoader';
-import { LoadingDegreeTiles } from './LoadingDegreeTile';
+import {LoadingDegreeTiles} from './LoadingDegreeTile';
 
-export const DegreeTiles = ({
-  name,
-  nameData,
-  degreeDays,
-  tempLow,
-  tempHigh,
-}) => {
-  const [degreeDay, setDegreeDay] = useState('');
-  const [tempatureLow, setTempatureLow] = useState('');
-  const [tempatureHigh, setTempatureHigh] = useState('');
-  const [noData, setNoData] = useState(null);
+type tile = {
+  name: string;
+  degreeDays: number | null;
+  tempLow: number | null;
+  tempHigh: number | null;
+};
+
+export const DegreeTiles = ({name, degreeDays, tempLow, tempHigh}: tile) => {
+  const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    if ((degreeDays !== true, tempLow !== true, tempHigh !== true)) {
-      setDegreeDay(degreeDays);
-      setTempatureLow(tempLow);
-      setTempatureHigh(tempHigh);
+    if (degreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
       setNoData(false);
       setLoading(false);
     } else {
       setNoData(true);
       setLoading(false);
     }
-
   }, [degreeDays, tempLow, tempHigh]);
-
-  // Check if all the data is available
-  if (!noData) {
-    console.log('All data loaded');
-  }
 
   return (
     <TouchableOpacity
-      // style={[styles.tile]}
+      style={[styles.tile]}
       // onPress={() => {
       //   if (!noData) {
       //     navigation.navigate('Individual', {
       //       name: name,
-      //       nameData: nameData,
       //       degreeDays: degreeDays,
       //       tempLow: tempLow,
       //       tempHigh: tempHigh,
@@ -79,10 +64,10 @@ export const DegreeTiles = ({
                   <>
                     {'L'}
                     <Text style={styles.colon}>:</Text>
-                    {tempatureLow}
+                    {tempLow}
                     {' H'}
                     <Text style={styles.colon}>:</Text>
-                    {tempatureHigh}
+                    {tempHigh}
                   </>
                 ) : (
                   'No data'
@@ -96,7 +81,7 @@ export const DegreeTiles = ({
             {!noData ? (
               <>
                 <Text style={styles.degreeDayMetric}>
-                  {degreeDay}
+                  {degreeDays}
                   <Text style={{fontSize: 10}}> DDA</Text>
                 </Text>
               </>
@@ -108,7 +93,7 @@ export const DegreeTiles = ({
           </View>
         </View>
       ) : (
-        <LoadingDegreeTiles/>
+        <LoadingDegreeTiles />
       )}
     </TouchableOpacity>
   );

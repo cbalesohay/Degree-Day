@@ -9,12 +9,13 @@ import {
   metricsData,
 } from '../constants/constants';
 import {PageIndicator} from '../ components/PageIndicator';
+import { WeatherComponent } from '../ components/WeatherComponent';
 
 export const IndividualInfoScreen = () => {
   return (
     <>
       <View style={styles.sectionContainer}>
-        <PageIndicator totalDots={metricsData.length} activeIndex={0} />
+        <WeatherComponent />
       </View>
     </>
   );

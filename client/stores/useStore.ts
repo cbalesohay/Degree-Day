@@ -1,8 +1,6 @@
 import {create} from 'zustand';
 import {produce} from 'immer';
 import zustandStorage from './storage';
-import { DegreeDay } from '../ components/DegreeDay';
-import { Fetch } from '../hooks/Fetch';
 
 export interface FilterState {
   type: string;
@@ -16,11 +14,7 @@ interface FilterStore {
   filters: FilterState[];
   setFilters: (filters: FilterState[]) => void;
   updateDegreeDays: (type: FilterState["type"], degreeDays: FilterState["degreeDays"]) => void;
-  updateFilterSelection: (type: string, selectedItems: string[]) => void;
-  toggleFilterSelection: (type: string) => void;
   resetFilters: () => void;
-  resetNonTabBarFilters: () => void;
-  resetTabBarFilters: () => void;
 }
 
 const initialFilters: FilterState[] = [
@@ -61,49 +55,11 @@ export const useStore = create<FilterStore>(set => ({
     set(
       produce(state => {
         const filter = state.filters.find(f => f.type == type);
-        console.log(type);
-        console.log(degreeDays);
+        console.log(`Type: ${type}`);
+        console.log(`Degree Days: ${degreeDays}`);
+        console.log(``);
         if(filter) filter.degreeDays = degreeDays;
       }),
     ),
-
-
-  
-  updateFilterSelection: (type, selectedItems) =>
-    set(
-      produce(state => {
-        const filter = state.filters.find(f => f.type === type);
-        if (filter) filter.selectedItems = selectedItems;
-      }),
-    ),
-  toggleFilterSelection: type =>
-    set(
-      produce(state => {
-        const filter = state.filters.find(f => f.type === type);
-        if (filter) filter.isSelected = !filter.isSelected;
-      }),
-    ),
   resetFilters: () => set({filters: initialFilters}),
-  resetTabBarFilters: () =>
-    set(
-      produce(state => {
-        state.filters.forEach(filter => {
-          if (!filter.isTabBar) {
-            filter.selectedItems = [];
-            filter.isSelected = false;
-          }
-        });
-      }),
-    ),
-  resetNonTabBarFilters: () =>
-    set(
-      produce(state => {
-        state.filters.forEach(filter => {
-          if (filter.isFilter) {
-            filter.selectedItems = [];
-            filter.isSelected = false;
-          }
-        });
-      }),
-    ),
 }));
