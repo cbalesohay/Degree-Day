@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      script: "serverTest.ts",
+      script: "server.js",
       env: {
         NODE_ENV: "development",
       },
