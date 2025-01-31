@@ -120,6 +120,8 @@ function fetchAndStoreData(specificDate, dayAfter, species, reqData) {
                 storeHumindiy(results);
                 break;
             case "Temperature":
+                storeTemperature(results);
+                break;
             case "WesternCherry":
             case "LeafRollers":
             case "CodlingMoth":

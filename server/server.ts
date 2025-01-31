@@ -158,6 +158,8 @@ async function fetchAndStoreData(
       storeHumindiy(results);
       break;
     case "Temperature":
+      storeTemperature(results);
+      break;
     case "WesternCherry":
     case "LeafRollers":
     case "CodlingMoth":

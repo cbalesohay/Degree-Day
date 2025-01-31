@@ -18,34 +18,34 @@ interface FilterStore {
 }
 
 const initialFilters: FilterState[] = [
-  // {
-  //   type: 'Temperature',
-  //   name: 'dayLow',
-  //   data: 0,
-  //   isLoading: true,
-  //   isSelected: false,
-  // },
-  // {
-  //   type: 'Temperature',
-  //   name: 'dayHigh',
-  //   data: 0,
-  //   isLoading: true,
-  //   isSelected: false,
-  // },
-  // {
-  //   type: 'Humidity',
-  //   name: 'dayAverage',
-  //   data: 0,
-  //   isLoading: true,
-  //   isSelected: false,
-  // },
-  // {
-  //   type: 'Rain',
-  //   name: 'dayRainfall',
-  //   data: 0,
-  //   isLoading: true,
-  //   isSelected: false,
-  // },
+  {
+    type: 'Temperature',
+    name: 'dayLow',
+    data: 0,
+    isLoading: true,
+    isSelected: false,
+  },
+  {
+    type: 'Temperature',
+    name: 'dayHigh',
+    data: 0,
+    isLoading: true,
+    isSelected: false,
+  },
+  {
+    type: 'Humidity',
+    name: 'dayAverage',
+    data: 0,
+    isLoading: true,
+    isSelected: false,
+  },
+  {
+    type: 'Rain',
+    name: 'dayRainfall',
+    data: 0,
+    isLoading: true,
+    isSelected: false,
+  },
 ];
 
 export const useMetric = create<FilterStore>(set => ({
