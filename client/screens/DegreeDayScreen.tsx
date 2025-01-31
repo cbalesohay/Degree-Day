@@ -47,7 +47,7 @@ export const DegreeDayScreen = () => {
     });
     datas.forEach(temp => {
       fetchData(parsedDate, temp.type, temp.name).then(result => {
-        console.log(result);
+        // console.log(result);
         updateDegrees(temp.name, result); //  Tempature update
       });
     });

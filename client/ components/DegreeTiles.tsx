@@ -22,6 +22,7 @@ type tile = {
   tempHigh: number | null;
 };
 
+// Update so that if one metric goes down, the other's will still display
 export const DegreeTiles = ({name, degreeDays, tempLow, tempHigh}: tile) => {
   const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(true);

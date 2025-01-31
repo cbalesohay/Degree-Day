@@ -158,7 +158,6 @@ async function fetchAndStoreData(
       storeHumindiy(results);
       break;
     case "Temperature":
-
     case "WesternCherry":
     case "LeafRollers":
     case "CodlingMoth":
@@ -223,17 +222,17 @@ function storeTemperature(users: any) {
   // Determines high and low temp for day
   sortMetric(users, "temperature");
   // Sets and Converts Celcius to Fahrenheit
-  storedData.Metric.dayLow = fahrenheitConversion(
-    Number(storedData.Metric.dayLow ?? 0)
+  storedData.Metric.dayLow = Number(
+    fahrenheitConversion(Number(storedData.Metric.dayLow ?? 0))
   );
-  storedData.Metric.dayHigh = fahrenheitConversion(
-    Number(storedData.Metric.dayHigh ?? 0)
+  storedData.Metric.dayHigh = Number(
+    fahrenheitConversion(Number(storedData.Metric.dayHigh ?? 0))
   );
-  storedData.Metric.dayAverage = fahrenheitConversion(
-    Number(storedData.Metric.dayAverage ?? 0)
+  storedData.Metric.dayAverage = Number(
+    fahrenheitConversion(Number(storedData.Metric.dayAverage ?? 0))
   );
-  storedData.Metric.current = fahrenheitConversion(
-    Number(storedData.Metric.current ?? 0)
+  storedData.Metric.current = Number(
+    fahrenheitConversion(Number(storedData.Metric.current ?? 0))
   );
 }
 
