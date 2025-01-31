@@ -173,10 +173,10 @@ function storeTemperature(users) {
     // Determines high and low temp for day
     sortMetric(users, "temperature");
     // Sets and Converts Celcius to Fahrenheit
-    storedData.Metric.dayLow = fahrenheitConversion(Number((_a = storedData.Metric.dayLow) !== null && _a !== void 0 ? _a : 0));
-    storedData.Metric.dayHigh = fahrenheitConversion(Number((_b = storedData.Metric.dayHigh) !== null && _b !== void 0 ? _b : 0));
-    storedData.Metric.dayAverage = fahrenheitConversion(Number((_c = storedData.Metric.dayAverage) !== null && _c !== void 0 ? _c : 0));
-    storedData.Metric.current = fahrenheitConversion(Number((_d = storedData.Metric.current) !== null && _d !== void 0 ? _d : 0));
+    storedData.Metric.dayLow = Number(fahrenheitConversion(Number((_a = storedData.Metric.dayLow) !== null && _a !== void 0 ? _a : 0)));
+    storedData.Metric.dayHigh = Number(fahrenheitConversion(Number((_b = storedData.Metric.dayHigh) !== null && _b !== void 0 ? _b : 0)));
+    storedData.Metric.dayAverage = Number(fahrenheitConversion(Number((_c = storedData.Metric.dayAverage) !== null && _c !== void 0 ? _c : 0)));
+    storedData.Metric.current = Number(fahrenheitConversion(Number((_d = storedData.Metric.current) !== null && _d !== void 0 ? _d : 0)));
 }
 function storeDegreeDay(species) {
     var _a;
