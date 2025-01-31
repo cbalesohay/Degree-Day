@@ -51,6 +51,9 @@ export const DegreeDayScreen = () => {
         updateDegrees(temp.name, result); //  Tempature update
       });
     });
+    times.forEach(time => {
+      updateTimes(time.name, parsedDate);
+    });
   }, [date]);
 
   return (
@@ -79,7 +82,10 @@ export const DegreeDayScreen = () => {
             <Text style={styles.sectionTitle}>For Testing Purposes!!!</Text>
             <SelectDate date={date} setDate={setDate}>
               <Text style={styles.date}>
-                <Text>{dateParsed}</Text>
+                {/* <Text>{dateParsed}</Text> */}
+                <Text>{times.map(time => (
+                  time.date
+                ))}</Text>
               </Text>
             </SelectDate>
           </View>
