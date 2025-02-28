@@ -17,6 +17,7 @@ import { location } from "../../constants/Metrics";
 import { LoadingDegreeTiles } from "../tiles/LoadingDegreeTile";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useRouter } from "expo-router";
 
 type tile = {
   name: string;
@@ -27,7 +28,6 @@ type tile = {
 };
 import { useStore } from "../../stores/useStore";
 
-
 // Update so that if one metric goes down, the other's will still display
 export const DegreeTiles = ({
   name,
@@ -36,21 +36,26 @@ export const DegreeTiles = ({
   tempHigh,
   navigation,
 }: tile) => {
+  const router = useRouter();
+
   // Degree day store
   const filters = useStore().filters;
   const updateSelected = useStore((state) => state.updateSelected);
-  
+
   const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const navToIndividual = () => {
     console.log("Clicked on tile");
     updateSelected(name); // Update selected type to true
-    navigation.navigate("Individual", {
-      name: name,
-      degreeDays: degreeDays,
-      tempLow: tempLow,
-      tempHigh: tempHigh,
+    router.push({
+      pathname: "/IndividualInfoScreen",
+      params: {
+        name,
+        degreeDays,
+        tempLow,
+        tempHigh,
+      },
     });
   };
 

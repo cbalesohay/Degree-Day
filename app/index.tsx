@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import SelectDate from "../../components/ui/SelectDate";
-import { DegreeTiles } from "../../components/tiles/DegreeTile";
-import { spotifyBlack, spotifyDarkGrey } from "../../constants/Colors";
+import SelectDate from "../components/ui/SelectDate";
+import { DegreeTiles } from "../components/tiles/DegreeTile";
+import { spotifyBlack, spotifyDarkGrey } from "../constants/Colors";
 import {
   StyleSheet,
   Text,
@@ -10,12 +10,12 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { useStore } from "../../stores/useStore";
-import { useMetric } from "../../stores/useMetric";
-import { useDataStore } from "../../stores/useFetch";
-import { useTime } from "../../stores/useTime";
+import { useStore } from "../stores/useStore";
+import { useMetric } from "../stores/useMetric";
+import { useDataStore } from "../stores/useFetch";
+import { useTime } from "../stores/useTime";
 import { updateCamera } from "@react-three/fiber/dist/declarations/src/core/utils";
-import { Wrapper } from "../../components/ui/Wrapper";
+import { Wrapper } from "../components/ui/Wrapper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";

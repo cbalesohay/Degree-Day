@@ -6,12 +6,12 @@ import {
   spotifyWhite,
   spotifyBlack,
   spotifyGreen,
-} from "../../constants/Colors";
-import { PageIndicator } from "../../components/ui/PageIndicator";
-import { WeatherTile } from "../../components/tiles/WeatherTile";
-import { Wrapper } from "../../components/ui/Wrapper";
-import { FooterToHome } from "../../components/ui/FooterToHome";
-import { useStore } from "../../stores/useStore";
+} from "../constants/Colors";
+// import { PageIndicator } from "../../components/ui/PageIndicator";
+import { WeatherTile } from "../components/tiles/WeatherTile";
+import { Wrapper } from "../components/ui/Wrapper";
+import { FooterToHome } from "../components/ui/FooterToHome";
+import { useStore } from "../stores/useStore";
 
 export default function IndividualInfoScreen ({ navigation }: any) {
   // Degree day store

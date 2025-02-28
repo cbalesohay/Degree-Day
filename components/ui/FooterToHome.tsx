@@ -20,6 +20,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useStore } from "../../stores/useStore";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
+import { useRouter } from "expo-router";
 
 type footer = {
   type: string;
@@ -27,6 +28,8 @@ type footer = {
 };
 
 export const FooterToHome = ({ name, navigation }: any) => {
+  const router = useRouter();
+
   // Degree day store
   const { filters } = useStore();
   const resetSelected = useStore((state) => state.resetSelected);
@@ -34,7 +37,9 @@ export const FooterToHome = ({ name, navigation }: any) => {
   const navToHome = () => {
     console.log("Clicked on tile");
     resetSelected(name); // Update selected type to true
-    navigation.navigate("Degree Day");
+    // navigation.navigate("Degree Day");
+    router.back();
+    
   };
 
   return (
