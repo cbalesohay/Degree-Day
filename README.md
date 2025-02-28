@@ -1,50 +1,24 @@
-# Welcome to your Expo app 👋
+## Precision Agriculture Project
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Goal: Develop a full stack mobile application to integrate wirelessly sensed data into site specific degree day models.
 
-## Get started
+- Researched agriculture extension degree day model.
+- Developing front-end and back-end React Native mobile application.
+- Developing React Native / MongoDB integration for data flow.
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+## Current UI of App
 
-2. Start the app
+<img src="https://github.com/user-attachments/assets/1bf5e667-a0bc-41bf-a0fe-c05483be906e" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 
-   ```bash
-    npx expo start
-   ```
+<img src="https://github.com/user-attachments/assets/bc30c1c9-5710-4a2a-a3c3-0e32a3436abf" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
 
-In the output, you'll find options to open the app in a
+## Front-End
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The front end of this project is a React Native application written using TypeScript. The tought behind making the switch from JavaScript to TypeScript was to type check the information. 
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+# Front-End tech used
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- React Native
+- TypeScript
+- Zustand
