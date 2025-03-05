@@ -11,34 +11,19 @@ function SelectDate({ date, setDate, children }: any) {
   return (
     <>
       <View style={styles.container}>
-        {/* <Button title={"Date"} onPress={() => setOpen(true)} /> */}
-        {/* <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode="date"
-          minimumDate={new Date("2024-01-02")}
-          maximumDate={new Date()}
-          onConfirm={(date) => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        /> */}
         <DateTimePicker
             value={date}
             mode="date"
             display="spinner"
-            onChange={(event, selectedDate) => {
+            minimumDate={new Date("2023-07-02")}
+            maximumDate={new Date()}
+            onChange={(date) => {
               setOpen(false);
-              if (selectedDate) {
-                setDate(selectedDate);
+              if (date) {
+                setDate(date);
               }
             }}
-            minimumDate={new Date("2024-01-02")}
-            maximumDate={new Date()}
+            textColor="white"
           />
         <Text>{children}</Text>
       </View>

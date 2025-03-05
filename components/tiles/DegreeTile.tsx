@@ -24,7 +24,6 @@ type tile = {
   degreeDays: number | null;
   tempLow: number | null;
   tempHigh: number | null;
-  navigation: string | any;
 };
 import { useStore } from "../../stores/useStore";
 
@@ -34,7 +33,6 @@ export const DegreeTiles = ({
   degreeDays,
   tempLow,
   tempHigh,
-  navigation,
 }: tile) => {
   const router = useRouter();
 
@@ -42,7 +40,7 @@ export const DegreeTiles = ({
   const filters = useStore().filters;
   const updateSelected = useStore((state) => state.updateSelected);
 
-  const [noData, setNoData] = useState(false);
+  const [noData, setNoData] = useState(true);
   const [loading, setLoading] = useState(true);
 
   const navToIndividual = () => {
@@ -64,8 +62,10 @@ export const DegreeTiles = ({
     if (degreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
       setNoData(false);
       setLoading(false);
-    } else {
+    } else if(degreeDays == -1 || tempLow == -1 || tempHigh == -1) {
       setNoData(true);
+      setLoading(false);
+    }else{
       setLoading(false);
     }
   }, [degreeDays, tempLow, tempHigh]);
@@ -85,7 +85,7 @@ export const DegreeTiles = ({
             <Text style={styles.location}>{location}</Text>
             <View style={styles.tempContainer}>
               <Text style={styles.tempMetric}>
-                {!loading ? (
+                {!noData ? (
                   <>
                     {"L"}
                     <Text style={styles.colon}>:</Text>

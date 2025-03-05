@@ -15,6 +15,7 @@ import {
 } from "react-native";
 
 export const Wrapper = ({ children }: any) => {
+  
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">

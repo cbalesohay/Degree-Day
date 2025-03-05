@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
+import { spotifyBlack, spotifyWhite } from "../constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -50,6 +50,14 @@ export default function Layout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: spotifyBlack,
+      primary: spotifyWhite,
+    },
+  };
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -60,10 +68,13 @@ export default function Layout() {
     return null;
   }
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false, // Hide headers if not needed
-      }}
-    />
+    // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "dark" ? MyTheme : MyTheme}>
+      <Stack
+        screenOptions={{
+          headerShown: false, // Hide headers if not needed
+        }}
+      />
+    </ThemeProvider>
   );
 }

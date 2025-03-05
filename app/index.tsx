@@ -14,11 +14,7 @@ import { useStore } from "../stores/useStore";
 import { useMetric } from "../stores/useMetric";
 import { useDataStore } from "../stores/useFetch";
 import { useTime } from "../stores/useTime";
-import { updateCamera } from "@react-three/fiber/dist/declarations/src/core/utils";
 import { Wrapper } from "../components/ui/Wrapper";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function DegreeDayScreen({ navigation }: any) {
   // Api call
@@ -45,9 +41,17 @@ export default function DegreeDayScreen({ navigation }: any) {
   // Date parsing function
   const parseDate = (data: Date | string) => {
     if (typeof data === "string") {
-      return data;
+      const date = data.slice(0, 10);
+      return date;
     }
-    return data.toISOString().slice(0, 10);
+
+    if(data !== undefined){
+      const date = data.toISOString().slice(0, 10);
+      return date;  
+    }
+    
+    const date = data;
+    return date;
   };
 
   // Date parsing / persisting
@@ -62,22 +66,6 @@ export default function DegreeDayScreen({ navigation }: any) {
     updateTimes("dateParsed", date);
     console.log(`Parsed Date: ${parsedDate}`);
 
-    // Fetch Data: Single Pull
-
-    // const data = fetchData(parsedDate);
-    // data.then((result: any) => {
-    //   updateDDays("Western Cherry", Math.round(result.wcDayDegreeDay));
-    //   updateDDays("Leaf Rollers", Math.round(result.lrDayDegreeDay));
-    //   updateDDays("Codling Moth", Math.round(result.cmDayDegreeDay));
-    //   updateDDays("Apple Scab", Math.round(result.asDayDegreeDay));
-    //   updateDegrees("dayLow", Math.round(result.dayLow));
-    //   updateDegrees("dayHigh", Math.round(result.dayHigh));
-    //   updateDegrees("dayAverage", Math.round(result.dayAverage));
-    //   updateDegrees("current", Math.round(result.current));
-    //   updateDegrees("dayRainfall", Math.round(result.dayRainfall));
-    //   updateDegrees("totalRainfall", Math.round(result.totalRainfall));
-    // });
-
     // Define an async function inside useEffect
     const fetchDataAndUpdate = async () => {
       try {
@@ -85,7 +73,18 @@ export default function DegreeDayScreen({ navigation }: any) {
 
         // Check if result is valid before updating state
         if (!result || typeof result !== "object") {
-          console.error("Invalid API response:", result);
+          console.log("Invalid API response:", result);
+          // Assign -1 to all values if there is an error
+          updateDDays("Western Cherry", -1);
+          updateDDays("Leaf Rollers", -1);
+          updateDDays("Codling Moth", -1);
+          updateDDays("Apple Scab", -1);
+          updateDegrees("dayLow", -1);
+          updateDegrees("dayHigh", -1);
+          updateDegrees("dayAverage", -1);
+          updateDegrees("current", -1);
+          updateDegrees("dayRainfall", -1);
+          updateDegrees("totalRainfall", -1);
           return;
         }
 
@@ -100,9 +99,12 @@ export default function DegreeDayScreen({ navigation }: any) {
         updateDegrees("dayRainfall", Math.round(result.dayRainfall));
         updateDegrees("totalRainfall", Math.round(result.totalRainfall));
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.log("Error fetching data:", error);
       }
     };
+
+    // Display new value
+    console.log("Western cherry degree days:", filters[0].degreeDays);
 
     fetchDataAndUpdate(); // Call the async function
 
@@ -127,7 +129,6 @@ export default function DegreeDayScreen({ navigation }: any) {
                   tempHigh={
                     datas.find((t) => t.name === "dayHigh")?.data ?? null
                   }
-                  navigation={navigation}
                 />
               </View>
             ))}
@@ -147,6 +148,7 @@ export default function DegreeDayScreen({ navigation }: any) {
                 ))}
               </SelectDate>
             </View>
+
           </View>
         </View>
       </Wrapper>
