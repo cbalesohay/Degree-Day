@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import zustandStorage from "./storage";
+// import zustandStorage from "./storage";
 
 export interface FilterState {
   name: string;
-  date: Date | null;
+  date: Date | undefined;
+  displayDate: string;
   isLoading: boolean;
   isSelected: boolean;
 }
@@ -14,6 +15,7 @@ interface FilterStore {
   setDate: (name: FilterState["name"], date: FilterState["date"]) => void;
   setFilters: (times: FilterState[]) => void;
   updateDate: (name: FilterState["name"], date: FilterState["date"]) => void;
+  updateDisplayDate: (name: FilterState["name"], displayDate: FilterState["displayDate"]) => void;
   resetFilters: () => void;
 }
 
@@ -21,6 +23,7 @@ const initialFilters: FilterState[] = [
   {
     name: "dateParsed",
     date: new Date(),
+    displayDate: new Date().toISOString().slice(0, 10),
     isLoading: true,
     isSelected: false,
   },
@@ -32,7 +35,6 @@ export const useTime = create<FilterStore>((set) => ({
     set(
       produce((state) => {
         const d = state.times.find((f: FilterState) => f.name == name);
-        // d.date = d.date.toISOString().slice(0, 10);
         if (d && d.date !== date) d.date = new Date();
       })
     ),
@@ -47,5 +49,11 @@ export const useTime = create<FilterStore>((set) => ({
         if (d && d.date !== newDate) d.date = newDate;
       })
     ),
+  updateDisplayDate: (name, displayDate) => set(
+    produce((state) => {
+      const d = state.times.find((f: FilterState) => f.name == name);
+      if (d && d.displayDate !== displayDate) d.displayDate = displayDate;
+    })
+  ),
   resetFilters: () => set({ times: initialFilters }),
 }));

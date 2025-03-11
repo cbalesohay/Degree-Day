@@ -1,33 +1,36 @@
-import React, { Children } from "react";
-import { useEffect, useState } from "react";
-import {
-  backgroundColorPrimary,
-  spotifyBlack,
-  spotifyWhite,
-} from "../../constants/Colors";
+import React from "react";
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
   View,
+  Dimensions,
 } from "react-native";
 
+const { height } = Dimensions.get("window");
+
 export const Wrapper = ({ children }: any) => {
-  
   return (
-    <SafeAreaView>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={{ flex: 1 }}>{children}</View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <View style={styles.innerView}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundStyle: {
-    backgroundColor: spotifyBlack,
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  innerView: {
     flex: 1,
   },
 });

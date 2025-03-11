@@ -1,31 +1,28 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useEffect, useState } from "react";
-import DatePicker from "react-native-date-picker";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button } from "react-native";
+import { useState } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useTime } from "../../stores/useTime";
 
-function SelectDate({ date, setDate, children }: any) {
-  const [open, setOpen] = useState(false);
+function SelectDate({ date }: any) {
+  const updateTimes = useTime((state) => state.updateDate); // Time update function
 
   return (
     <>
       <View style={styles.container}>
         <DateTimePicker
-            value={date}
-            mode="date"
-            display="spinner"
-            minimumDate={new Date("2023-07-02")}
-            maximumDate={new Date()}
-            onChange={(date) => {
-              setOpen(false);
-              if (date) {
-                setDate(date);
-              }
-            }}
-            textColor="white"
-          />
-        <Text>{children}</Text>
+          value={date}
+          mode="date"
+          display="default"
+          minimumDate={new Date("2023-07-02")}
+          maximumDate={new Date()}
+          onChange={(_, selectedDate) => {
+            if (selectedDate) {
+              updateTimes("dateParsed", selectedDate);
+            }
+          }}
+          textColor="white"
+        />
       </View>
     </>
   );
