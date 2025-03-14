@@ -1,13 +1,11 @@
-import React, { Children, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-const { width } = Dimensions.get("window");
 import {
   spotifyDarkGrey,
   spotifyWhite,
@@ -15,8 +13,6 @@ import {
 } from "../../constants/Colors";
 import { location } from "../../constants/Metrics";
 import { LoadingDegreeTiles } from "../tiles/LoadingDegreeTile";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useRouter } from "expo-router";
 
 type tile = {
@@ -28,12 +24,7 @@ type tile = {
 import { useStore } from "../../stores/useStore";
 
 // Update so that if one metric goes down, the other's will still display
-export const DegreeTiles = ({
-  name,
-  degreeDays,
-  tempLow,
-  tempHigh,
-}: tile) => {
+export const DegreeTiles = ({ name, degreeDays, tempLow, tempHigh }: tile) => {
   const router = useRouter();
 
   // Degree day store
@@ -46,8 +37,16 @@ export const DegreeTiles = ({
   const navToIndividual = () => {
     console.log("Clicked on tile");
     updateSelected(name); // Update selected type to true
+    // router.push({
+    //   pathname: "/IndividualInfoScreen",
+    //   params: {
+    //     name,
+    //     degreeDays,
+    //     tempLow,
+    //     tempHigh,
+    //   },
     router.push({
-      pathname: "/IndividualInfoScreen",
+      pathname: "/SwipablePages",
       params: {
         name,
         degreeDays,
@@ -62,21 +61,16 @@ export const DegreeTiles = ({
     if (degreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
       setNoData(false);
       setLoading(false);
-    } else if(degreeDays == -1 || tempLow == -1 || tempHigh == -1) {
+    } else if (degreeDays == -1 || tempLow == -1 || tempHigh == -1) {
       setNoData(true);
       setLoading(false);
-    }else{
+    } else {
       setLoading(false);
     }
   }, [degreeDays, tempLow, tempHigh]);
 
   return (
-    <TouchableOpacity
-      style={[styles.tile]}
-      // onPress={!noData ? navToIndividual : undefined}
-      onPress={navToIndividual}
-      // disabled={noData} // Disable button when data is loading
-    >
+    <TouchableOpacity style={[styles.tile]} onPress={navToIndividual}>
       {!loading ? (
         <View style={styles.tile}>
           {/* Left side: Display the name, location, and temperature */}
@@ -138,11 +132,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 100,
     backgroundColor: spotifyDarkGrey || "#fff",
-  },
-  loadingTile: {
-    // Apply transparent grey overlay when loading
-    backgroundColor: "#f0f0f0",
-    opacity: 0.6, // Grey out the tile during loading
   },
   leftSide: {
     flex: 2, // Take 2/3 of the tile width

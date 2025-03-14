@@ -59,20 +59,21 @@ export const WeatherTile = ({ navigation }: any) => {
   return (
     <>
       <View>
+        
         <Text style={styles.sectionTitle}>
           {filters.find((t) => t.isSelected === true)?.name ?? null}
         </Text>
+
         <Text style={{ color: "white", fontSize: 12, textAlign: "center" }}>
           {location}
         </Text>
+
         <Text style={{ color: "white", fontSize: 45, textAlign: "center" }}>
           {filters.find((t) => t.isSelected === true)?.degreeDays === -1
             ? "No data"
             : (filters.find((t) => t.isSelected === true)?.degreeDays ?? null)}
         </Text>
-        {/* <Text style={{color: 'white'}}>
-          Date: {times.find(t => t.name === 'dateParsed')?.date ?? null}
-        </Text> */}
+
         <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>
           <>
             {datas.find((t) => t.name === "dayLow")?.data === -1 &&
@@ -132,7 +133,6 @@ export const WeatherTile = ({ navigation }: any) => {
         <View style={styles.smallTileContainer}>
           <Text style={{ padding: 5 }}>
             <IndividualTile
-              type="Rain"
               name="Rain"
               metric1={
                 datas.find((t) => t.name === "dayRainfall")?.data ?? null
@@ -140,15 +140,12 @@ export const WeatherTile = ({ navigation }: any) => {
               metric2={
                 datas.find((t) => t.name === "totalRainfall")?.data ?? null
               }
-              navigation={navigation}
             />
           </Text>
           <Text style={{ padding: 5 }}>
             <IndividualTile
-              type="Humidity"
               name="Humidity"
               metric1={datas.find((t) => t.name === "dayAverage")?.data ?? null}
-              navigation={navigation}
             />
           </Text>
         </View>

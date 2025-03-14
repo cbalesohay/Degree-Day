@@ -24,10 +24,9 @@ import { useRouter } from "expo-router";
 
 type footer = {
   type: string;
-  navigation: string | any;
 };
 
-export const FooterToHome = ({ name, navigation }: any) => {
+export const FooterToHome = ({ name}: any) => {
   const router = useRouter();
 
   // Degree day store
@@ -37,9 +36,7 @@ export const FooterToHome = ({ name, navigation }: any) => {
   const navToHome = () => {
     console.log("Clicked on tile");
     resetSelected(name); // Update selected type to true
-    // navigation.navigate("Degree Day");
     router.back();
-    
   };
 
   return (
@@ -67,8 +64,5 @@ const styles = StyleSheet.create({
     color: spotifyWhite,
     margin: 10,
     alignSelf: "flex-end",
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
   },
 });

@@ -48,9 +48,6 @@ const styles = StyleSheet.create({
   sectionContainer: {
     padding: 20,
   },
-  titleContainer: {
-    padding: 20,
-  },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -68,21 +65,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "white",
     opacity: 0.6,
-  },
-  date: {
-    fontSize: 25,
-    textAlign: "center",
-    color: "white",
-  },
-  tile: {
-    flexDirection: "row",
-    marginTop: 10,
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    flex: 1,
-    height: 100,
-    backgroundColor: spotifyDarkGrey || "#fff",
   },
 });

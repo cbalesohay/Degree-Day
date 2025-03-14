@@ -1,75 +1,57 @@
-import React, { Children, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-const { width } = Dimensions.get("window");
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import {
   spotifyDarkGrey,
   spotifyWhite,
   spotifyGreen,
 } from "../../constants/Colors";
 import { LoadingDegreeTiles } from "../tiles/LoadingDegreeTile";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 type tile = {
-  type: string;
   name: string;
   metric1?: number | null;
-  metric1Title?: string | null;
   metric2?: number | null;
-  metric2Title?: string | null;
-  navigation: string | any;
 };
 
-export const IndividualTile = ({
-  type,
-  name,
-  metric1,
-  metric1Title,
-  metric2,
-  metric2Title,
-  navigation,
-}: tile) => {
-  const [noData, setNoData] = useState(false);
+export const IndividualTile = ({ name, metric1, metric2 }: tile) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     if (metric1 !== -1 && metric2 !== -1) {
-      setNoData(false);
       setLoading(false);
     } else {
-      setNoData(true);
       setLoading(false);
     }
   }, [metric1, metric2]);
 
   return (
     <>
-      <TouchableOpacity
-        style={[styles.tile]}
-        // onPress={!noData ? navToIndividual : undefined}
-        //   onPress={navToIndividual}
-        // disabled={noData} // Disable button when data is loading
-      >
+      <TouchableOpacity style={[styles.tile]}>
         {!loading ? (
           <View style={styles.tile}>
             {/* Left side: Display the name, location, and temperature */}
             <View style={styles.tileContainer}>
               <Text style={styles.name}>{name}</Text>
             </View>
+
             <View style={styles.tileContainer}>
-              <Text style={styles.metric}>Daily Rain: {metric1}</Text>
+              <Text style={styles.metric}>
+                <Text>{metric1 === -1 ? "No data" : `Daily: ` + metric1}</Text>
+              </Text>
             </View>
-            <View style={styles.tileContainer}>
-              <Text style={styles.metric}>Total Rain: {metric2} </Text>
-            </View>
+
+            {metric2 ? (
+              <View style={styles.tileContainer}>
+                <Text style={styles.metric}>
+                  <Text>
+                    {metric2 === -1 ? "No data" : `Total: ` + metric2}
+                  </Text>
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.tileContainer}></View> // For Spacing
+            )}
           </View>
         ) : (
           <LoadingDegreeTiles />
@@ -83,10 +65,6 @@ const styles = StyleSheet.create({
   tile: {
     marginTop: 10,
     borderRadius: 20,
-    // shadowColor: '#000',
-    // shadowOpacity: .1,
-    // shadowRadius: 6,
-    // flex: 1,
     height: 100,
     width: 150,
     backgroundColor: spotifyDarkGrey || "#fff",
