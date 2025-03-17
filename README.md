@@ -9,9 +9,16 @@
 
 ## Current UI of App
 
-<img src="https://github.com/user-attachments/assets/1bf5e667-a0bc-41bf-a0fe-c05483be906e" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
+### iOS
+<img src="https://github.com/user-attachments/assets/cab3930b-12a9-4071-b1ee-a35528d06248" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
+<img src="https://github.com/user-attachments/assets/ddbe817a-d2ef-474f-9817-702d9d98aac3" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 
-<img src="https://github.com/user-attachments/assets/bc30c1c9-5710-4a2a-a3c3-0e32a3436abf" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
+
+### Android
+<img src="https://github.com/user-attachments/assets/75258a77-90f6-4d4c-8483-0f93ee538c38" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
+<img src="https://github.com/user-attachments/assets/e18002a9-1827-4adc-8e4a-a2983111d45d" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
+
+
 
 ## Front-End
 
