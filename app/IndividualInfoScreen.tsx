@@ -20,9 +20,9 @@ export default function IndividualInfoScreen({ navigation }: any) {
           </View>
         </View>
       </Wrapper>
-      {/* <FooterToHome
+      <FooterToHome
         type={filters.find((t) => t.isSelected === true)?.name ?? null}
-      /> */}
+      />
     </>
   );
 }

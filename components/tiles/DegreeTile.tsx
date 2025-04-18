@@ -17,14 +17,21 @@ import { useRouter } from "expo-router";
 
 type tile = {
   name: string;
-  degreeDays: number | null;
+  dailyDegreeDays: number | null;
+  totalDegreeDays: number | null;
   tempLow: number | null;
   tempHigh: number | null;
 };
 import { useStore } from "../../stores/useStore";
 
 // Update so that if one metric goes down, the other's will still display
-export const DegreeTiles = ({ name, degreeDays, tempLow, tempHigh }: tile) => {
+export const DegreeTiles = ({
+  name,
+  dailyDegreeDays,
+  totalDegreeDays,
+  tempLow,
+  tempHigh,
+}: tile) => {
   const router = useRouter();
 
   // Degree day store
@@ -37,37 +44,38 @@ export const DegreeTiles = ({ name, degreeDays, tempLow, tempHigh }: tile) => {
   const navToIndividual = () => {
     console.log("Clicked on tile");
     updateSelected(name); // Update selected type to true
-    // router.push({
-    //   pathname: "/IndividualInfoScreen",
-    //   params: {
-    //     name,
-    //     degreeDays,
-    //     tempLow,
-    //     tempHigh,
-    //   },
     router.push({
-      pathname: "/SwipablePages",
+      pathname: "/IndividualInfoScreen",
       params: {
         name,
-        degreeDays,
+        dailyDegreeDays,
+        totalDegreeDays,
         tempLow,
         tempHigh,
       },
+      // router.push({
+      //   pathname: "/SwipablePages",
+      //   params: {
+      //     name,
+      //     degreeDays,
+      //     tempLow,
+      //     tempHigh,
+      //   },
     });
   };
 
   useEffect(() => {
     setLoading(true);
-    if (degreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
+    if (dailyDegreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
       setNoData(false);
       setLoading(false);
-    } else if (degreeDays == -1 || tempLow == -1 || tempHigh == -1) {
+    } else if (dailyDegreeDays == -1 || tempLow == -1 || tempHigh == -1) {
       setNoData(true);
       setLoading(false);
     } else {
       setLoading(false);
     }
-  }, [degreeDays, tempLow, tempHigh]);
+  }, [dailyDegreeDays, totalDegreeDays, tempLow, tempHigh]);
 
   return (
     <TouchableOpacity style={[styles.tile]} onPress={navToIndividual}>
@@ -103,8 +111,23 @@ export const DegreeTiles = ({ name, degreeDays, tempLow, tempHigh }: tile) => {
             {!noData ? (
               <>
                 <Text style={styles.degreeDayMetric}>
-                  {degreeDays}
-                  <Text style={{ fontSize: 10 }}> DDA</Text>
+                  {dailyDegreeDays}
+                  <Text style={{ fontSize: 15 }}> Daily</Text>
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.degreeDayNoData}>No data</Text>
+              </>
+            )}
+            {!noData ? (
+              <>
+                <Text style={styles.totalDegreeDayMetric}>
+                  {totalDegreeDays}
+                  <Text style={{ fontSize: 15, color: spotifyGreen }}>
+                    {" "}
+                    Total
+                  </Text>
                 </Text>
               </>
             ) : (
@@ -158,6 +181,12 @@ const styles = StyleSheet.create({
   },
   degreeDayMetric: {
     fontSize: 40,
+    fontWeight: 400,
+    color: spotifyWhite,
+    textAlign: "right",
+  },
+  totalDegreeDayMetric: {
+    fontSize: 20,
     fontWeight: 400,
     color: spotifyWhite,
     textAlign: "right",

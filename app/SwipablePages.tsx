@@ -15,13 +15,13 @@ export default function SwipeablePages() {
 
   return (
     <>
-      <View style={styles.container}>
+      {/* <View style={styles.container}> */}
         <PagerView
           style={styles.pagerView}
           initialPage={0}
-          //   scrollEnabled={true}
-          scrollEnabled={false}
-          overScrollMode="never"
+          scrollEnabled={true}
+          // scrollEnabled={false}
+          // overScrollMode="never"
         >
           <View key="1" style={styles.page}>
             <Text style={styles.text}>Page 1</Text>
@@ -38,7 +38,7 @@ export default function SwipeablePages() {
             <IndividualInfoScreen />
           </View>
         </PagerView>
-      </View>
+      {/* </View> */}
       <FooterToHome
         type={filters.find((t) => t.isSelected === true)?.name ?? null}
       />

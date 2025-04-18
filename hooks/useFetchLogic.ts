@@ -16,6 +16,8 @@ export const useFetchLogic = () => {
   const times = useTime().times; // Time store
 
   const updateDDays = useStore((state) => state.updateDegreeDays); // Degree day update function
+  const updateDailyDDays = useStore((state) => state.updateDailyDegreeDays); // Degree day update function
+  const updateTotalDDays = useStore((state) => state.updateTotalDegreeDays); // Degree day update function
   const updateDegrees = useMetric((state) => state.updateDegrees); // Tempature update function
   const updateTimes = useTime((state) => state.updateDate); // Time update function
   const updateDisplayDate = useTime((state) => state.updateDisplayDate); // Display Date update function
@@ -73,10 +75,14 @@ export const useFetchLogic = () => {
           return;
         }
 
-        updateDDays("Western Cherry", Math.round(result.wcDayDegreeDay));
-        updateDDays("Leaf Rollers", Math.round(result.lrDayDegreeDay));
-        updateDDays("Codling Moth", Math.round(result.cmDayDegreeDay));
-        updateDDays("Apple Scab", Math.round(result.asDayDegreeDay));
+        updateDailyDDays("Western Cherry", Math.round(result["Western Cherry"].dailyDegreeDays));
+        updateDailyDDays("Leaf Rollers", Math.round(result["Leaf Rollers"].dailyDegreeDays));
+        updateDailyDDays("Codling Moth", Math.round(result["Codling Moth"].dailyDegreeDays));
+        updateDailyDDays("Apple Scab", Math.round(result["Apple Scab"].dailyDegreeDays));
+        updateTotalDDays("Western Cherry", Math.round(result["Western Cherry"].totalDegreeDays));
+        updateTotalDDays("Leaf Rollers", Math.round(result["Leaf Rollers"].totalDegreeDays));
+        updateTotalDDays("Codling Moth", Math.round(result["Codling Moth"].totalDegreeDays));
+        updateTotalDDays("Apple Scab", Math.round(result["Apple Scab"].totalDegreeDays));
         updateDegrees("dayLow", Math.round(result.dayLow));
         updateDegrees("dayHigh", Math.round(result.dayHigh));
         updateDegrees("dayAverage", Math.round(result.dayAverage));

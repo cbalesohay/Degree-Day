@@ -69,9 +69,9 @@ export const WeatherTile = ({ navigation }: any) => {
         </Text>
 
         <Text style={{ color: "white", fontSize: 45, textAlign: "center" }}>
-          {filters.find((t) => t.isSelected === true)?.degreeDays === -1
+          {filters.find((t) => t.isSelected === true)?.dailyDegreeDays === -1
             ? "No data"
-            : (filters.find((t) => t.isSelected === true)?.degreeDays ?? null)}
+            : (filters.find((t) => t.isSelected === true)?.dailyDegreeDays ?? null)}
         </Text>
 
         <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>

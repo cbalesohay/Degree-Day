@@ -44,6 +44,7 @@ SplashScreen.preventAutoHideAsync();
 
 // import { Stack } from "expo-router";
 import React from "react";
+import Tabs from "expo-router";
 
 export default function Layout() {
   const colorScheme = useColorScheme();
@@ -77,4 +78,21 @@ export default function Layout() {
       />
     </ThemeProvider>
   );
+
+
+
+
+  // return (
+  //   // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+  //   <ThemeProvider value={colorScheme === "dark" ? MyTheme : MyTheme}>
+  //     <Tabs>
+  //     <Tabs.Screen
+  //       name="index"
+  //       options={{
+  //         href: null,
+  //       }}
+  //     />
+  //   </Tabs>
+  //   </ThemeProvider>
+  // );
 }

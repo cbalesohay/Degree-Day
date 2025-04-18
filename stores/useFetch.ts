@@ -1,7 +1,8 @@
 import { create } from "zustand";
 // import { produce } from "immer";
 // import zustandStorage from "./storage";
-const API_URL = "https://ddserver-2fsv.onrender.com/post";
+// const API_URL = "https://ddserver-2fsv.onrender.com/post";
+const API_URL = "https://ddserver-2fsv.onrender.com/sendData";
 
 interface DataStoreState {
   data: number;
@@ -31,6 +32,8 @@ export const useDataStore = create<DataStoreState>((set) => ({
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const json = await response.json();
+
+      console.log(json);
 
       return json;
     } catch (error) {

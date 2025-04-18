@@ -6,6 +6,7 @@ import { useStore } from "../stores/useStore";
 import { useMetric } from "../stores/useMetric";
 import { useTime } from "../stores/useTime";
 import { Wrapper } from "../components/ui/Wrapper";
+import { SettingsTile } from "@/components/tiles/SettingsTile";
 
 export default function DegreeDayScreen() {
   const filters = useStore().filters; // Degree day store
@@ -29,7 +30,8 @@ export default function DegreeDayScreen() {
                 <DegreeTiles
                   key={filter.name}
                   name={`${filter.name}`}
-                  degreeDays={filter.degreeDays}
+                  dailyDegreeDays={filter.dailyDegreeDays}
+                  totalDegreeDays={filter.totalDegreeDays}
                   tempLow={datas.find((t) => t.name === "dayLow")?.data ?? null}
                   tempHigh={
                     datas.find((t) => t.name === "dayHigh")?.data ?? null
@@ -38,6 +40,11 @@ export default function DegreeDayScreen() {
               </View>
             ))}
           </View>
+
+          <View>
+            <SettingsTile/>
+          </View>
+
         </View>
       </Wrapper>
     </>
