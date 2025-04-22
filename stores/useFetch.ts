@@ -8,14 +8,14 @@ interface DataStoreState {
   data: number;
   isLoading: boolean;
   isError: boolean | null;
-  fetchData: (param1: string | Date) => Promise<JSON>;
+  fetchData: () => Promise<JSON>;
 }
 
 export const useDataStore = create<DataStoreState>((set) => ({
   data: 0,
   isLoading: false,
   isError: null,
-  fetchData: async (param1: string | Date) => {
+  fetchData: async () => {
     set({ isLoading: true });
     try {
       if (!API_URL) {
@@ -23,10 +23,6 @@ export const useDataStore = create<DataStoreState>((set) => ({
       }
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ date: param1 }),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

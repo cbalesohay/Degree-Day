@@ -8,6 +8,8 @@ export interface FilterState {
   degreeDays: number;
   dailyDegreeDays: number;
   totalDegreeDays: number;
+  startDate: Date | null;
+  endDate: Date | null;
   isLoading: boolean;
   isSelected: boolean;
 }
@@ -21,11 +23,19 @@ interface FilterStore {
   ) => void;
   updateDailyDegreeDays: (
     name: FilterState["name"],
-    degreeDays: FilterState["degreeDays"]
+    dailyDegreeDays: FilterState["dailyDegreeDays"]
   ) => void;
   updateTotalDegreeDays: (
     name: FilterState["name"],
-    degreeDays: FilterState["degreeDays"]
+    totalDegreeDays: FilterState["totalDegreeDays"]
+  ) => void;
+  updateStartDate: (
+    name: FilterState["name"],
+    startDate: FilterState["startDate"]
+  ) => void;
+  updateEndDate: (
+    name: FilterState["name"],
+    endDate: FilterState["endDate"]
   ) => void;
   updateSelected: (name: FilterState["name"]) => void;
   resetSelected: (name: FilterState["name"]) => void;
@@ -38,6 +48,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
+    startDate: null as Date | null,
+    endDate: null as Date | null,
     isLoading: true,
     isSelected: false,
   },
@@ -46,6 +58,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
+    startDate: new Date("2025-03-02"),
+    endDate: new Date("2025-03-02"),
     isLoading: true,
     isSelected: false,
   },
@@ -54,6 +68,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
+    startDate: new Date("2025-03-02"),
+    endDate: new Date("2025-03-02"),
     isLoading: true,
     isSelected: false,
   },
@@ -62,6 +78,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
+    startDate: new Date("2025-03-02"),
+    endDate: new Date("2025-03-02"),
     isLoading: true,
     isSelected: false,
   },
@@ -81,26 +99,48 @@ export const useStore = create<FilterStore>((set) => ({
           filter.degreeDays = newDegreeDays;
       })
     ),
-  updateDailyDegreeDays: (name, newDegreeDays) =>
+  updateDailyDegreeDays: (name, newDailyDegreeDays) =>
     set(
       produce((state) => {
         const filter = state.filters.find((f: FilterState) => f.name == name);
         console.log(`Name: ${name}`);
-        console.log(`Daily Degree Days: ${newDegreeDays}`);
+        console.log(`Daily Degree Days: ${newDailyDegreeDays}`);
         console.log(``);
-        if (filter && filter.dailDegreeDays !== newDegreeDays)
-          filter.dailyDegreeDays = newDegreeDays;
+        if (filter && filter.dailDegreeDays !== newDailyDegreeDays)
+          filter.dailyDegreeDays = newDailyDegreeDays;
       })
     ),
-  updateTotalDegreeDays: (name, newDegreeDays) =>
+  updateTotalDegreeDays: (name, newTotalDegreeDays) =>
     set(
       produce((state) => {
         const filter = state.filters.find((f: FilterState) => f.name == name);
         console.log(`Name: ${name}`);
-        console.log(`Total Degree Days: ${newDegreeDays}`);
+        console.log(`Total Degree Days: ${newTotalDegreeDays}`);
         console.log(``);
-        if (filter && filter.totalDegreeDays !== newDegreeDays)
-          filter.totalDegreeDays = newDegreeDays;
+        if (filter && filter.totalDegreeDays !== newTotalDegreeDays)
+          filter.totalDegreeDays = newTotalDegreeDays;
+      })
+    ),
+  updateStartDate: (name, newStartDate) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Start Date: ${newStartDate}`);
+        console.log(``);
+        if (filter && filter.startDate !== newStartDate)
+          filter.startDate = newStartDate;
+      })
+    ),
+  updateEndDate: (name, newEndDate) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Start Date: ${newEndDate}`);
+        console.log(``);
+        if (filter && filter.endDate !== newEndDate)
+          filter.endDate = newEndDate;
       })
     ),
   updateSelected: (name) =>

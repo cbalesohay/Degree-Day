@@ -7,6 +7,8 @@ import {
 } from "../../constants/Colors";
 import { LoadingDegreeTiles } from "./LoadingDegreeTile";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useStore } from "../../stores/useStore";
+import { useChangeDate } from "@/stores/useChangeDate";
 
 type tile = {
   name: string;
@@ -18,14 +20,10 @@ export const SettingsTile = () => {
   const [loading, setLoading] = useState(true);
   const currentYear = new Date().getFullYear();
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   if (metric1 !== -1 && metric2 !== -1) {
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [metric1, metric2]);
+  // Degree day store
+  const filters = useStore().filters;
+
+  const changeDate = useChangeDate((state) => state.changeDate);
 
   return (
     <>
@@ -42,7 +40,13 @@ export const SettingsTile = () => {
           Western Cherry
         </Text>
 
-        <View style={{ paddingLeft: 10, flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            paddingLeft: 10,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <Text
             style={{
               color: "white",
@@ -56,25 +60,31 @@ export const SettingsTile = () => {
 
           <View style={{ alignItems: "center", padding: 5 }}>
             <DateTimePicker
-              value={new Date("2025-03-02")}
+              value={
+                filters.find((n) => n.name === "Western Cherry")?.startDate ??
+                new Date(`${currentYear}-01-02`)
+              }
               mode="date"
               display="default"
               minimumDate={new Date(`${currentYear}-01-02`)}
-              maximumDate={new Date(`${currentYear + 1}-01-01`)} // Need to change to the day of the last day so you cant make the start date after the end date
-              onChange={(_, selectedDate) => {
-                // if (selectedDate) {
-                //   updateTimes("dateParsed", selectedDate);
-                // }
-                // if (Platform.OS !== "ios") {
-                //   setShowPicker(false); // Hide picker after selection
-                // }
+              maximumDate={filters.find((n) => n.name === "Western Cherry")?.endDate ?? new Date(`${currentYear + 1}-01-01`)} // Need to change to the day of the last day so you cant make the start date after the end date
+              onChange={(event, selectedDate) => {
+                if (event.type === "set" && selectedDate) {
+                  changeDate("Western Cherry", selectedDate, null);
+                }
               }}
               textColor="white"
             />
           </View>
         </View>
 
-        <View style={{ paddingLeft: 10, flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            paddingLeft: 10,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <Text
             style={{
               color: "white",
@@ -86,25 +96,25 @@ export const SettingsTile = () => {
             End Date:
           </Text>
 
-            {/** 
-             * For even spacing
-             */}
+          {/**
+           * For even spacing
+           */}
           <Text>{"  "}</Text>
 
-          <View style={{ alignItems: "center", padding: 5}}>
+          <View style={{ alignItems: "center", padding: 5 }}>
             <DateTimePicker
-              value={new Date("2025-03-02")}
+              value={
+                filters.find((n) => n.name === "Western Cherry")?.endDate ??
+                new Date(`${currentYear}-01-02`)
+              }
               mode="date"
               display="default"
               minimumDate={new Date(`${currentYear}-01-02`)}
               maximumDate={new Date(`${currentYear + 1}-01-01`)}
-              onChange={(_, selectedDate) => {
-                // if (selectedDate) {
-                //   updateTimes("dateParsed", selectedDate);
-                // }
-                // if (Platform.OS !== "ios") {
-                //   setShowPicker(false); // Hide picker after selection
-                // }
+              onChange={(event, selectedDate) => {
+                if (event.type === "set" && selectedDate) {
+                  changeDate("Western Cherry", null, selectedDate);
+                }
               }}
               textColor="white"
             />
@@ -122,7 +132,6 @@ const styles = StyleSheet.create({
     height: 160,
     width: 300,
     backgroundColor: spotifyDarkGrey || "#fff",
-    
   },
   leftSide: {
     flex: 2, // Take 2/3 of the tile width
