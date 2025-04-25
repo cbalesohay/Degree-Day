@@ -58,8 +58,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
-    startDate: new Date("2025-03-02"),
-    endDate: new Date("2025-03-02"),
+    startDate: null as Date | null,
+    endDate: null as Date | null,
     isLoading: true,
     isSelected: false,
   },
@@ -68,8 +68,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
-    startDate: new Date("2025-03-02"),
-    endDate: new Date("2025-03-02"),
+    startDate: null as Date | null,
+    endDate: null as Date | null,
     isLoading: true,
     isSelected: false,
   },
@@ -78,8 +78,8 @@ const initialFilters: FilterState[] = [
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
-    startDate: new Date("2025-03-02"),
-    endDate: new Date("2025-03-02"),
+    startDate: null as Date | null,
+    endDate: null as Date | null,
     isLoading: true,
     isSelected: false,
   },
@@ -137,7 +137,7 @@ export const useStore = create<FilterStore>((set) => ({
       produce((state) => {
         const filter = state.filters.find((f: FilterState) => f.name == name);
         console.log(`Name: ${name}`);
-        console.log(`New Start Date: ${newEndDate}`);
+        console.log(`New End Date: ${newEndDate}`);
         console.log(``);
         if (filter && filter.endDate !== newEndDate)
           filter.endDate = newEndDate;

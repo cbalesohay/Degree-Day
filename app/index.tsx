@@ -41,9 +41,18 @@ export default function DegreeDayScreen() {
             ))}
           </View>
 
-          <View>
-            <SettingsTile/>
+          {/* <View>
+            <SettingsTile inputName="Western Cherry"/>
           </View>
+          <View>
+            <SettingsTile inputName="Leaf Rollers"/>
+          </View>
+          <View>
+            <SettingsTile inputName="Codling Moth"/>
+          </View>
+          <View>
+            <SettingsTile inputName="Apple Scab"/>
+          </View> */}
 
         </View>
       </Wrapper>

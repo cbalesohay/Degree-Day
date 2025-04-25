@@ -113,6 +113,24 @@ export const useFetchLogic = () => {
         updateStartDate("Western Cherry", new Date(result["Western Cherry"].startDate));
         updateEndDate("Western Cherry", new Date(result["Western Cherry"].endDate));
 
+        console.log("Western Cherry Start Date: " + result["Western Cherry"].startDate);
+        console.log("Western Cherry End Date: " + result["Western Cherry"].endDate);
+        console.log("Leaf Rollers Start Date: " + result["Leaf Rollers"].startDate);
+        console.log("Leaf Rollers End Date: " + result["Leaf Rollers"].endDate);
+        console.log("Codling Moth Start Date: " + result["Codling Moth"].startDate);
+        console.log("Codling Moth End Date: " + result["Codling Moth"].endDate);
+        console.log("Apple Scab Start Date: " + result["Apple Scab"].startDate);
+        console.log("Apple Scab End Date: " + result["Apple Scab"].endDate);
+
+        updateStartDate("Leaf Rollers", new Date(result["Leaf Rollers"].startDate));
+        updateEndDate("Leaf Rollers", new Date(result["Leaf Rollers"].endDate));
+
+        updateStartDate("Codling Moth", new Date(result["Codling Moth"].startDate));
+        updateEndDate("Codling Moth", new Date(result["Codling Moth"].endDate));
+
+        updateStartDate("Apple Scab", new Date(result["Apple Scab"].startDate));
+        updateEndDate("Apple Scab", new Date(result["Apple Scab"].endDate));
+
         updateDegrees("dayLow", Math.round(result.dayLow));
         updateDegrees("dayHigh", Math.round(result.dayHigh));
         updateDegrees("dayAverage", Math.round(result.dayAverage));

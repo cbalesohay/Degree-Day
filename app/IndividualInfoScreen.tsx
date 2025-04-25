@@ -5,6 +5,7 @@ import { Wrapper } from "../components/ui/Wrapper";
 import { FooterToHome } from "../components/ui/FooterToHome";
 import SelectDate from "../components/ui/SelectDate";
 import { useFetchLogic } from "../hooks/useFetchLogic";
+import { SettingsTile } from "../components/tiles/SettingsTile";
 
 export default function IndividualInfoScreen({ navigation }: any) {
   const { timeFind, filters } = useFetchLogic();
@@ -15,8 +16,12 @@ export default function IndividualInfoScreen({ navigation }: any) {
         <View style={styles.sectionContainer}>
           <WeatherTile navigation={navigation} />
 
-          <View style={{ paddingTop: 30, alignItems: "center" }}>
+          {/* <View style={{ paddingTop: 30, alignItems: "center" }}>
             <SelectDate date={timeFind} />
+          </View> */}
+
+          <View style={{ paddingTop: 10, alignItems: "center" }}>
+            <SettingsTile inputName={filters.find((t) => t.isSelected === true)?.name ?? "Western Cherry"}/>
           </View>
         </View>
       </Wrapper>
