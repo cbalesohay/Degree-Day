@@ -7,7 +7,7 @@ import {
   spotifyGreen,
   spotifyLightGrey,
 } from "../../constants/Colors";
-import { metricsData } from "@/constants/Metrics";
+// import { metricsData } from "@/constants/Metrics";
 import {
   StyleSheet,
   Text,

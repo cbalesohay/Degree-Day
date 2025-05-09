@@ -5,10 +5,19 @@ import { Wrapper } from "../components/ui/Wrapper";
 import { FooterToHome } from "../components/ui/FooterToHome";
 import SelectDate from "../components/ui/SelectDate";
 import { useFetchLogic } from "../hooks/useFetchLogic";
+import { useStore } from "../stores/useStore";
 import { SettingsTile } from "../components/tiles/SettingsTile";
 
 export default function IndividualInfoScreen({ navigation }: any) {
-  const { timeFind, filters } = useFetchLogic();
+  // const { timeFind, filter } = useFetchLogic();
+  const {
+      filters,
+      updateDegreeDays,
+      updateDailyDegreeDays,
+      updateTotalDegreeDays,
+      updateStartDate,
+      updateEndDate,
+    } = useStore();
 
   return (
     <>

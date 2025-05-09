@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { produce } from "immer";
 import zustandStorage from "./storage";
 import { persist } from "zustand/middleware";
+import { pestNames } from "@/constants/Metrics";
 
 export interface FilterState {
   name: string;
@@ -43,8 +44,8 @@ interface FilterStore {
 }
 
 const initialFilters: FilterState[] = [
-  {
-    name: "Western Cherry",
+  ...pestNames.map((name) => ({
+    name: name,
     degreeDays: -1,
     dailyDegreeDays: -1,
     totalDegreeDays: -1,
@@ -52,37 +53,7 @@ const initialFilters: FilterState[] = [
     endDate: null as Date | null,
     isLoading: true,
     isSelected: false,
-  },
-  {
-    name: "Leaf Rollers",
-    degreeDays: -1,
-    dailyDegreeDays: -1,
-    totalDegreeDays: -1,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
-    isLoading: true,
-    isSelected: false,
-  },
-  {
-    name: "Codling Moth",
-    degreeDays: -1,
-    dailyDegreeDays: -1,
-    totalDegreeDays: -1,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
-    isLoading: true,
-    isSelected: false,
-  },
-  {
-    name: "Apple Scab",
-    degreeDays: -1,
-    dailyDegreeDays: -1,
-    totalDegreeDays: -1,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
-    isLoading: true,
-    isSelected: false,
-  },
+  }))
 ];
 
 export const useStore = create<FilterStore>((set) => ({

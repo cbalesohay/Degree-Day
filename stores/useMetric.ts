@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import zustandStorage from "./storage";
+import { weatherMetrics } from "@/constants/Metrics";
 
 export interface FilterState {
-  type: string;
   name: string;
   data: number;
   isLoading: boolean;
@@ -18,41 +18,12 @@ interface FilterStore {
 }
 
 const initialFilters: FilterState[] = [
-  {
-    type: "Temperature",
-    name: "dayLow",
+  ...weatherMetrics.map((metric) => ({
+    name: metric,
     data: -1,
     isLoading: true,
     isSelected: false,
-  },
-  {
-    type: "Temperature",
-    name: "dayHigh",
-    data: -1,
-    isLoading: true,
-    isSelected: false,
-  },
-  {
-    type: "Humidity",
-    name: "dayAverage",
-    data: -1,
-    isLoading: true,
-    isSelected: false,
-  },
-  {
-    type: "Rain",
-    name: "dayRainfall",
-    data: -1,
-    isLoading: true,
-    isSelected: false,
-  },
-  {
-    type: "Rain",
-    name: "totalRainfall",
-    data: -1,
-    isLoading: true,
-    isSelected: false,
-  },
+  }))
 ];
 
 export const useMetric = create<FilterStore>((set) => ({
