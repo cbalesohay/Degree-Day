@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { DegreeTiles } from "../components/tiles/DegreeTile";
 import { spotifyDarkGrey } from "../constants/Colors";
 import { StyleSheet, Text, View } from "react-native";
 import { useStore } from "../stores/useStore";
 import { useMetric } from "../stores/useMetric";
+import { useFetchLogic } from "@/hooks/useFetchLogic";
 import { useTime } from "../stores/useTime";
 import { Wrapper } from "../components/ui/Wrapper";
 import { SettingsTile } from "@/components/tiles/SettingsTile";
@@ -12,6 +13,66 @@ export default function DegreeDayScreen() {
   const filters = useStore().filters; // Degree day store
   const datas = useMetric().datas; // Tempature store
   const times = useTime().times; // Time store
+  const { fetchDataAndUpdate } = useFetchLogic(); // Fetch logic from your hook
+
+  // useEffect to call fetchDataAndUpdate when filters or other dependencies change
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        console.log("Fetching data...");
+
+        // You can now call any necessary fetch/update logic from your custom hook
+        await fetchDataAndUpdate(); // This will trigger your fetch data logic
+
+        // If necessary, you can also manually call other update functions here.
+        // Example: await updateDegreeDays(pest, data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const interval = setInterval(() => {
+      fetch(); // Call it again every set interval (e.g., every 5 minutes)
+    }, 5 * 60 * 1000); // every 5 minutes
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [filters]); // Re-run effect if filters change (or add other necessary dependencies)
+
+
+  
+  // const metricss = useFetchLogic();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       console.log("Fetching data...");
+  //       //metricss.filters.forEach; // call API or update local state
+
+  //       // If you need to fetch data for each filter asynchronously
+  //       const fetchPromises = metricss.filters.map(async (filter) => {
+  //         // Assuming you have a function to fetch data for each filter
+  //         // You can make an API call or update your state here
+
+  //         //console.log("Fetching data for filter:", filter);
+
+  //         // Example: await fetchDataForFilter(filter);
+  //       });
+
+  //       // Wait for all fetch operations to complete
+  //       await Promise.all(fetchPromises);
+
+
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   const interval = setInterval(() => {
+  //     fetchData();
+  //   }, 0.1 * 60 * 1000); // every 5 minutes
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>
@@ -41,10 +102,18 @@ export default function DegreeDayScreen() {
             ))}
           </View>
 
-          <View>
-            <SettingsTile/>
+          {/* <View>
+            <SettingsTile inputName="Western Cherry"/>
           </View>
-
+          <View>
+            <SettingsTile inputName="Leaf Rollers"/>
+          </View>
+          <View>
+            <SettingsTile inputName="Codling Moth"/>
+          </View>
+          <View>
+            <SettingsTile inputName="Apple Scab"/>
+          </View> */}
         </View>
       </Wrapper>
     </>
