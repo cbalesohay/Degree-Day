@@ -163,6 +163,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      width: 5,
+      height: 4,
+    },
   },
   sectionTitle: {
     fontSize: 24,
@@ -176,14 +182,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   tile: {
-    flexDirection: "row", // Display tiles in a row (left side and right side)
-    marginTop: 10,
+    // flexDirection: "row", // Display tiles in a row (left side and right side)
+    // marginTop: 10,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 6,
     flex: 1,
-    height: 100,
+    // height: 100,
     backgroundColor: spotifyDarkGrey || "#fff",
   },
 });

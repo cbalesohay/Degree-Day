@@ -1,7 +1,6 @@
 import { create } from "zustand";
 // import { produce } from "immer";
 // import zustandStorage from "./storage";
-// const API_URL = "https://ddserver-2fsv.onrender.com/post";
 const API_URL = "https://ddserver-2fsv.onrender.com/sendData";
 
 interface DataStoreState {

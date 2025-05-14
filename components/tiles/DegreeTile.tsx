@@ -151,7 +151,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 6,
+    shadowOffset: {
+      width: 5,
+      height: 4,
+    },
     flex: 1,
     height: 100,
     backgroundColor: spotifyDarkGrey || "#fff",

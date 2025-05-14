@@ -148,6 +148,12 @@ const styles = StyleSheet.create({
   tile: {
     marginTop: 10,
     borderRadius: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      width: 5,
+      height: 4,
+    },
     height: 100,
     width: 300,
     backgroundColor: spotifyDarkGrey || "#fff",
