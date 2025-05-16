@@ -1,5 +1,6 @@
 import { create } from "zustand";
-const API_URL = "https://ddserver-2fsv.onrender.com/newDate";
+// const API_URL = "https://ddserver-2fsv.onrender.com/newDate";
+const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/newDate";
 
 interface ChangeDateState {
   data: number;

@@ -1,7 +1,8 @@
 import { create } from "zustand";
 // import { produce } from "immer";
 // import zustandStorage from "./storage";
-const API_URL = "https://ddserver-2fsv.onrender.com/sendData";
+// const API_URL = "https://ddserver-2fsv.onrender.com/sendData";
+const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/sendData";
 
 interface DataStoreState {
   data: number;
