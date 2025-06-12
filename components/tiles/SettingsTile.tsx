@@ -4,17 +4,19 @@ import {
   spotifyDarkGrey,
   spotifyWhite,
   spotifyGreen,
+  spotifyLightGrey,
 } from "../../constants/Colors";
 import { LoadingDegreeTiles } from "./LoadingDegreeTile";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useStore } from "../../stores/useStore";
 import { useChangeDate } from "@/stores/useChangeDate";
+import { useFetchLogic } from "@/hooks/useFetchLogic";
 
-type tile = {
+type settingsTileProp = {
   inputName: string;
 };
 
-export const SettingsTile = ({ inputName }: tile) => {
+export const SettingsTile = ({ inputName }: settingsTileProp) => {
   const [loading, setLoading] = useState(true);
   const currentYear = new Date().getFullYear();
 
@@ -22,199 +24,210 @@ export const SettingsTile = ({ inputName }: tile) => {
   const filters = useStore().filters;
 
   const changeDate = useChangeDate((state) => state.changeDate);
+  const { fetchDataAndUpdate } = useFetchLogic(); // Fetch logic from your hook
+
+  const fetch = async () => {
+    try {
+      console.log("Fetching data...");
+
+      // You can now call any necessary fetch/update logic from your custom hook
+      await fetchDataAndUpdate(); // This will trigger your fetch data logic
+
+      // If necessary, you can also manually call other update functions here.
+      // Example: await updateDegreeDays(pest, data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const [isEditingStart, setIsEditingStart] = useState(false);
+  const [isEditingEnd, setIsEditingEnd] = useState(false);
+  const [isEditingBase, setIsEditingBase] = useState(false);
+  const [isEditingMax, setIsEditingMax] = useState(false);
+
+  const filter = filters.find((n) => n.name === inputName);
+  const startDate = filter?.start_date ?? new Date(`${currentYear}-01-02`);
+  const endDate = filter?.end_date ?? new Date(`${currentYear}-01-02`);
 
   return (
     <>
-      <View style={[styles.tile]}>
-        {/* <Text
-          style={{
-            color: "white",
-            textAlign: "center",
-            paddingTop: 5,
-            paddingBottom: 15,
-            fontSize: 30,
-          }}
-        >
-          {inputName}
-        </Text> */}
-
+      <View style={{ flexDirection: "row" }}>
         <View
           style={{
-            paddingLeft: 10,
-            flexDirection: "row",
-            alignItems: "center",
+            backgroundColor: "#333",
+            padding: 10,
+            borderRadius: 20,
+            width: "70%",
           }}
         >
-          <Text
+          {/* Start Date Row */}
+          <View
             style={{
-              color: "white",
-              textAlign: "center",
-              paddingTop: 5,
-              fontSize: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            Start Date:
-          </Text>
-
-          <View style={{ alignItems: "center", padding: 5 }}>
-            <DateTimePicker
-              value={
-                filters.find((n) => n.name === inputName)?.startDate ??
-                new Date(`${currentYear}-01-02`)
-              }
-              mode="date"
-              display="default"
-              minimumDate={new Date(`${currentYear}-01-02`)}
-              maximumDate={
-                filters.find((n) => n.name === inputName)?.endDate ??
-                new Date(`${currentYear + 1}-01-01`)
-              } // Need to change to the day of the last day so you cant make the start date after the end date
-              onChange={async (event, selectedDate) => {
-                selectedDate = new Date(selectedDate ?? Date.now());
-                selectedDate.setHours(0, 0, 0, 0); // Set time to midnight
-
-                if (event.type === "set" && selectedDate) {
-                  try {
-                    changeDate(inputName, selectedDate, null);
-                    console.log("Start Date Change: " + selectedDate);
-                  } catch (error) {
-                    console.error("Error changing start date:", error);
-                    throw error; // Rethrow the error to be caught in the catch block
+            <Text style={{ color: "white", fontSize: 18 }}>Date Start:</Text>
+            {isEditingStart ? (
+              <DateTimePicker
+                value={startDate}
+                mode="date"
+                display="default"
+                minimumDate={new Date(`${currentYear}-01-02`)}
+                maximumDate={endDate}
+                onChange={async (_, selectedDate) => {
+                  setIsEditingStart(false);
+                  if (selectedDate) {
+                    selectedDate.setHours(0, 0, 0, 0);
+                    try {
+                      await changeDate(inputName, selectedDate, null);
+                      await fetch(); // Fetch new data after changing the date
+                    } catch (error) {
+                      console.error("Error changing start date:", error);
+                    }
                   }
-                }
-              }}
-              textColor="white"
-            />
+                }}
+                textColor="white"
+              />
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ color: "white", fontSize: 16 }}>
+                  {startDate.toISOString().slice(0, 10)}
+                </Text>
+              </View>
+            )}
+
+            <TouchableOpacity
+              onPress={() => setIsEditingStart(!isEditingStart)}
+            >
+              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+                {isEditingStart ? "X" : "Edit"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* End Date Row */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 18 }}>Date End:</Text>
+            {isEditingEnd ? (
+              <DateTimePicker
+                value={endDate}
+                mode="date"
+                display="default"
+                minimumDate={startDate}
+                maximumDate={new Date(`${currentYear + 1}-01-01`)}
+                onChange={async (_, selectedDate) => {
+                  setIsEditingEnd(false);
+                  if (selectedDate) {
+                    selectedDate.setHours(0, 0, 0, 0);
+                    try {
+                      await changeDate(inputName, null, selectedDate);
+                      await fetch(); // Fetch new data after changing the date
+                    } catch (error) {
+                      console.error("Error changing end date:", error);
+                    }
+                  }
+                }}
+                textColor="white"
+              />
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ color: "white", fontSize: 16 }}>
+                  {endDate.toISOString().slice(0, 10)}
+                </Text>
+              </View>
+            )}
+
+            <TouchableOpacity onPress={() => setIsEditingEnd(!isEditingEnd)}>
+              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+                {isEditingEnd ? "X" : "Edit"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Temp Base Row */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 18 }}>Temp Base:</Text>
+            <Text style={{ color: "white", fontSize: 16 }}>
+              {isEditingBase ? 0 : filter?.temp_base}°
+            </Text>
+
+            <TouchableOpacity onPress={() => setIsEditingBase(!isEditingBase)}>
+              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+                {isEditingBase ? "X" : "Edit"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Temp Max Row */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 18 }}>Temp Max:</Text>
+            <Text style={{ color: "white", fontSize: 16 }}>
+              {isEditingMax ? 0 : filter?.temp_max}°
+            </Text>
+
+            <TouchableOpacity onPress={() => setIsEditingMax(!isEditingMax)}>
+              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+                {isEditingMax ? "X" : "Edit"}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
+        {/* Edit Button Row */}
         <View
           style={{
+            flexDirection: "column",
             paddingLeft: 10,
-            flexDirection: "row",
-            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: 13,
+            marginBottom: 12,
           }}
         >
-          <Text
-            style={{
-              color: "white",
-              textAlign: "center",
-              paddingTop: 5,
-              fontSize: 20,
-            }}
-          >
-            End Date:
-          </Text>
+          {/* <TouchableOpacity onPress={() => setIsEditingStart(!isEditingStart)}>
+            <Text style={{ color: spotifyLightGrey }}>
+              {isEditingStart ? "X" : "Edit"}
+            </Text>
+          </TouchableOpacity> */}
 
-          {/**
-           * For even spacing
-           */}
-          <Text>{"  "}</Text>
+          {/* <TouchableOpacity onPress={() => setIsEditingEnd(!isEditingEnd)}>
+            <Text style={{ color: spotifyLightGrey }}>
+              {isEditingEnd ? "X" : "Edit"}
+            </Text>
+          </TouchableOpacity> */}
 
-          <View style={{ alignItems: "center", padding: 5 }}>
-            <DateTimePicker
-              value={
-                filters.find((n) => n.name === inputName)?.endDate ??
-                new Date(`${currentYear}-01-02`)
-              }
-              mode="date"
-              display="default"
-              minimumDate={new Date(`${currentYear}-01-02`)}
-              maximumDate={new Date(`${currentYear + 1}-01-01`)}
-              onChange={async (event, selectedDate) => {
-                selectedDate = new Date(selectedDate ?? Date.now());
-                selectedDate.setHours(0, 0, 0, 0); // Set time to midnight
+          {/* <TouchableOpacity onPress={() => setIsEditingBase(!isEditingBase)}>
+            <Text style={{ color: spotifyLightGrey }}>
+              {isEditingBase ? "X" : "Edit"}
+            </Text>
+          </TouchableOpacity> */}
 
-                if (event.type === "set" && selectedDate) {
-                  try {
-                    await changeDate(inputName, null, selectedDate);
-                    console.log("End Date Change Temps: " + selectedDate);
-                  } catch (error) {
-                    console.error("Error changing end date:", error);
-                    throw error; // Rethrow the error to be caught in the catch block
-                  }
-                }
-              }}
-              textColor="white"
-            />
-          </View>
+          {/* <TouchableOpacity onPress={() => setIsEditingMax(!isEditingMax)}>
+            <Text style={{ color: spotifyLightGrey }}>
+              {isEditingMax ? "X" : "Edit"}
+            </Text>
+          </TouchableOpacity> */}
         </View>
       </View>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  tile: {
-    marginTop: 10,
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      width: 5,
-      height: 4,
-    },
-    height: 100,
-    width: 300,
-    backgroundColor: spotifyDarkGrey || "#fff",
-  },
-  leftSide: {
-    flex: 2, // Take 2/3 of the tile width
-    paddingLeft: 15,
-  },
-  rightSide: {
-    flex: 1, // Take 1/3 of the tile width
-    alignItems: "flex-end",
-    paddingTop: 10,
-    paddingRight: 15,
-  },
-  loadingTile: {
-    // Apply transparent grey overlay when loading
-    backgroundColor: "#f0f0f0",
-    opacity: 0.6, // Grey out the tile during loading
-  },
-  tileContainer: {
-    flex: 1,
-
-    textAlign: "center",
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: 800,
-    color: spotifyWhite,
-    textAlign: "center",
-  },
-  location: {
-    fontSize: 12,
-    fontWeight: 300,
-    color: spotifyWhite,
-    textAlign: "left",
-  },
-  degreeDayMetric: {
-    fontSize: 40,
-    fontWeight: 400,
-    color: spotifyWhite,
-    textAlign: "right",
-  },
-  degreeDayNoData: {
-    fontSize: 20,
-    fontWeight: 400,
-    color: spotifyWhite,
-    textAlign: "right",
-  },
-  tempContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    paddingTop: 15,
-  },
-  metric: {
-    fontSize: 15,
-    fontWeight: 400,
-    color: spotifyWhite,
-    textAlign: "center",
-  },
-  colon: {
-    color: spotifyGreen,
-  },
-});

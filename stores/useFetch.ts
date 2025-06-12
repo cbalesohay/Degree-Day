@@ -2,7 +2,9 @@ import { create } from "zustand";
 // import { produce } from "immer";
 // import zustandStorage from "./storage";
 // const API_URL = "https://ddserver-2fsv.onrender.com/sendData";
-const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/sendData";
+// const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/sendData";
+// const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/send-data";
+const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/send-fast";
 
 interface DataStoreState {
   data: number;
@@ -22,14 +24,14 @@ export const useDataStore = create<DataStoreState>((set) => ({
         throw new Error("API_URL is not defined");
       }
       const response = await fetch(API_URL, {
-        method: "POST",
+        method: "GET",
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const json = await response.json();
 
-      console.log(json);
+      // console.log(json);
 
       return json;
     } catch (error) {

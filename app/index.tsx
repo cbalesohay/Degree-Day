@@ -8,6 +8,9 @@ import { useFetchLogic } from "@/hooks/useFetchLogic";
 import { useTime } from "../stores/useTime";
 import { Wrapper } from "../components/ui/Wrapper";
 import { SettingsTile } from "@/components/tiles/SettingsTile";
+import { ReCalculateButton } from "@/components/ui/ReCalculateButton";
+import { AddMetric } from "@/components/tiles/AddMetric";
+import { Collapsible } from "@/components/Collapsible";
 
 export default function DegreeDayScreen() {
   const filters = useStore().filters; // Degree day store
@@ -34,6 +37,7 @@ export default function DegreeDayScreen() {
     const interval = setInterval(() => {
       fetch(); // Call it again every set interval (e.g., every 5 minutes)
     }, 5 * 60 * 1000); // every 5 minutes
+  // }, 60 * 60 * 1000); // every 1 hour
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, [filters]); // Re-run effect if filters change (or add other necessary dependencies)
@@ -80,6 +84,7 @@ export default function DegreeDayScreen() {
         <View style={styles.sectionContainer}>
           <View style={styles.headerContainer}>
             <Text style={styles.sectionTitle}>Degree Day</Text>
+            <Text style={styles.sectionSubTitle}>{datas.find((t) => t.name === "curr_temp")?.data}°</Text>
             <Text style={styles.sectionSubTitle}>
               {times.find((time) => time.name === "dateParsed")?.displayDate}
             </Text>
@@ -91,11 +96,11 @@ export default function DegreeDayScreen() {
                 <DegreeTiles
                   key={filter.name}
                   name={`${filter.name}`}
-                  dailyDegreeDays={filter.dailyDegreeDays}
-                  totalDegreeDays={filter.totalDegreeDays}
-                  tempLow={datas.find((t) => t.name === "dayLow")?.data ?? null}
-                  tempHigh={
-                    datas.find((t) => t.name === "dayHigh")?.data ?? null
+                  daily_degree_days={filter.daily_degree_days}
+                  total_degree_days={filter.total_degree_days}
+                  temp_low={datas.find((t) => t.name === "day_low")?.data ?? null}
+                  temp_high={
+                    datas.find((t) => t.name === "day_high")?.data ?? null
                   }
                 />
               </View>
@@ -114,6 +119,13 @@ export default function DegreeDayScreen() {
           <View>
             <SettingsTile inputName="Apple Scab"/>
           </View> */}
+          <ReCalculateButton/>
+          <Collapsible title="Add" iconName="plus">
+            <AddMetric />
+          </Collapsible>
+          <Collapsible title="Delete" iconName="minus">
+            <AddMetric />
+          </Collapsible>
         </View>
       </Wrapper>
     </>

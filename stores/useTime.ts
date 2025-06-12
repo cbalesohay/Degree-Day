@@ -4,7 +4,7 @@ import { produce } from "immer";
 
 export interface FilterState {
   name: string;
-  date: Date | undefined;
+  date: Date | null;
   displayDate: string;
   isLoading: boolean;
   isSelected: boolean;

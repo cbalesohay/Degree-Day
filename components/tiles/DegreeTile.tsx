@@ -17,20 +17,20 @@ import { useRouter } from "expo-router";
 
 type tile = {
   name: string;
-  dailyDegreeDays: number | null;
-  totalDegreeDays: number | null;
-  tempLow: number | null;
-  tempHigh: number | null;
+  daily_degree_days: number | null;
+  total_degree_days: number | null;
+  temp_low: number | null;
+  temp_high: number | null;
 };
 import { useStore } from "../../stores/useStore";
 
 // Update so that if one metric goes down, the other's will still display
 export const DegreeTiles = ({
   name,
-  dailyDegreeDays,
-  totalDegreeDays,
-  tempLow,
-  tempHigh,
+  daily_degree_days,
+  total_degree_days,
+  temp_low,
+  temp_high,
 }: tile) => {
   const router = useRouter();
 
@@ -48,34 +48,34 @@ export const DegreeTiles = ({
       pathname: "/IndividualInfoScreen",
       params: {
         name,
-        dailyDegreeDays,
-        totalDegreeDays,
-        tempLow,
-        tempHigh,
+        daily_degree_days,
+        total_degree_days,
+        temp_low,
+        temp_high,
       },
       // router.push({
       //   pathname: "/SwipablePages",
       //   params: {
       //     name,
       //     degreeDays,
-      //     tempLow,
-      //     tempHigh,
+      //     temp_low,
+      //     temp_high,
       //   },
     });
   };
 
   useEffect(() => {
     setLoading(true);
-    if (dailyDegreeDays !== -1 && tempLow !== -1 && tempHigh !== -1) {
+    if (daily_degree_days !== -1 && temp_low !== -1 && temp_high !== -1) {
       setNoData(false);
       setLoading(false);
-    } else if (dailyDegreeDays == -1 || tempLow == -1 || tempHigh == -1) {
+    } else if (daily_degree_days == -1 || temp_low == -1 || temp_high == -1) {
       setNoData(true);
       setLoading(false);
     } else {
       setLoading(false);
     }
-  }, [dailyDegreeDays, totalDegreeDays, tempLow, tempHigh]);
+  }, [daily_degree_days, total_degree_days, temp_low, temp_high]);
 
   return (
     <TouchableOpacity style={[styles.tile]} onPress={navToIndividual}>
@@ -91,12 +91,12 @@ export const DegreeTiles = ({
                   <>
                     {"L"}
                     <Text style={styles.colon}>:</Text>
-                    {tempLow}
+                    {temp_low}
                     {"°"}
                     {"  "}
                     {"H"}
                     <Text style={styles.colon}>:</Text>
-                    {tempHigh}
+                    {temp_high}
                     {"°"}
                   </>
                 ) : (
@@ -111,7 +111,7 @@ export const DegreeTiles = ({
             {!noData ? (
               <>
                 <Text style={styles.degreeDayMetric}>
-                  {dailyDegreeDays}
+                  {daily_degree_days}
                   <Text style={{ fontSize: 15 }}> Daily</Text>
                 </Text>
               </>
@@ -123,7 +123,7 @@ export const DegreeTiles = ({
             {!noData ? (
               <>
                 <Text style={styles.totalDegreeDayMetric}>
-                  {totalDegreeDays}
+                  {total_degree_days}
                   <Text style={{ fontSize: 15, color: spotifyGreen }}>
                     {" "}
                     Total

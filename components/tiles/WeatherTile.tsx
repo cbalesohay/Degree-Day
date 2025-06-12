@@ -56,10 +56,11 @@ export const WeatherTile = ({ navigation }: any) => {
   // Time store
   const { times } = useTime();
 
+  // const [lastLoad, setLastLoad] = useState(new Date());
+
   return (
     <>
       <View>
-        
         <Text style={styles.sectionTitle}>
           {filters.find((t) => t.isSelected === true)?.name ?? null}
         </Text>
@@ -68,25 +69,33 @@ export const WeatherTile = ({ navigation }: any) => {
           {location}
         </Text>
 
-        <Text style={{ color: "white", fontSize: 45, textAlign: "center" }}>
-          {filters.find((t) => t.isSelected === true)?.dailyDegreeDays === -1
+        <Text style={{ color: "white", fontSize: 45, textAlign: "center", marginLeft: 30 }}>
+          {filters.find((t) => t.isSelected === true)?.daily_degree_days === -1
             ? "No data"
-            : (filters.find((t) => t.isSelected === true)?.dailyDegreeDays ?? null)}
+            : filters.find((t) => t.isSelected === true)?.daily_degree_days ??
+              null}
+          <Text style={{ color: spotifyLightGrey, fontSize: 15, textAlign: "center" }}>
+            {" "}
+            {filters.find((t) => t.isSelected === true)?.total_degree_days === -1
+              ? ""
+              : filters.find((t) => t.isSelected === true)?.total_degree_days ??
+                null}
+          </Text>
         </Text>
 
         <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>
           <>
-            {datas.find((t) => t.name === "dayLow")?.data === -1 &&
-            datas.find((t) => t.name === "dayHigh")?.data === -1 ? (
+            {datas.find((t) => t.name === "day_low")?.data === -1 &&
+            datas.find((t) => t.name === "day_high")?.data === -1 ? (
               <></>
             ) : (
               <>
                 {"L"}
                 <Text style={{ color: spotifyGreen }}>:</Text>
-                {datas.find((t) => t.name === "dayLow")?.data ?? null}°{"  "}
+                {datas.find((t) => t.name === "day_low")?.data ?? null}°{"  "}
                 {"H"}
                 <Text style={{ color: spotifyGreen }}>:</Text>
-                {datas.find((t) => t.name === "dayHigh")?.data ?? null}°
+                {datas.find((t) => t.name === "day_high")?.data ?? null}°
               </>
             )}
           </>
@@ -97,7 +106,7 @@ export const WeatherTile = ({ navigation }: any) => {
             // alignItems: 'center',
             // flex: 0.8,
             // flexDirection: 'column',
-            paddingVertical: 20,
+            // paddingVertical: 0,
             // backgroundColor: spotifyBlack,
             width: 0,
           }}
@@ -135,17 +144,17 @@ export const WeatherTile = ({ navigation }: any) => {
             <IndividualTile
               name="Rain"
               metric1={
-                datas.find((t) => t.name === "dayRainfall")?.data ?? null
+                datas.find((t) => t.name === "day_rainfall")?.data ?? null
               }
               metric2={
-                datas.find((t) => t.name === "totalRainfall")?.data ?? null
+                datas.find((t) => t.name === "total_rainfall")?.data ?? null
               }
             />
           </Text>
           <Text style={{ padding: 5 }}>
             <IndividualTile
               name="Humidity"
-              metric1={datas.find((t) => t.name === "dayAverage")?.data ?? null}
+              metric1={datas.find((t) => t.name === "curr_humidity")?.data ?? null}
             />
           </Text>
         </View>

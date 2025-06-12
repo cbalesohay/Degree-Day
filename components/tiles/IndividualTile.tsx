@@ -37,7 +37,11 @@ export const IndividualTile = ({ name, metric1, metric2 }: tile) => {
 
             <View style={styles.tileContainer}>
               <Text style={styles.metric}>
-                <Text>{metric1 === -1 ? "No data" : `Daily: ` + metric1}</Text>
+                <Text>
+                  {metric1 === -1
+                    ? "No data"
+                    : `${name === "Humidity" ? "Current:" : "Daily:"} ${metric1}${name === "Rain" ? " in." : "%"}`}
+                </Text>
               </Text>
             </View>
 
@@ -45,7 +49,9 @@ export const IndividualTile = ({ name, metric1, metric2 }: tile) => {
               <View style={styles.tileContainer}>
                 <Text style={styles.metric}>
                   <Text>
-                    {metric2 === -1 ? "No data" : `Total: ` + metric2}
+                    {metric2 === -1
+                      ? "No data"
+                      : `YTD Total: ${metric2}${name === "Rain" ? " in." : ""}`}
                   </Text>
                 </Text>
               </View>
