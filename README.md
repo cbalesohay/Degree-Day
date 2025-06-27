@@ -8,8 +8,8 @@
 ## Current UI of App
 
 ### iOS
-<img src="https://github.com/user-attachments/assets/6947f6b2-88f7-4028-951f-b4ca3ec7cc42" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
-<img src="https://github.com/user-attachments/assets/29fefe07-dcf7-44bb-be5d-655d5a9e38ee" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
+<img src="https://github.com/user-attachments/assets/e0abb402-3aab-4de6-9ced-935c487f2eee" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
+<img src="https://github.com/user-attachments/assets/04013bc4-6d97-49ab-80d9-6aca89d9ee96" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 <img src="https://github.com/user-attachments/assets/a02e395c-50b3-4f78-94ab-1f53fbed039e" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 
 ## Front-End
