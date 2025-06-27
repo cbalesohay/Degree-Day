@@ -1,6 +1,6 @@
 import { create } from "zustand";
-// const API_URL = "https://ddserver-2fsv.onrender.com/newDate";
-const API_URL = "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/newDate";
+const API_URL =
+  "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/new-date";
 
 interface ChangeDateState {
   data: number;
@@ -8,8 +8,8 @@ interface ChangeDateState {
   isError: boolean | null;
   changeDate: (
     nameToAlter: string,
-    newStartDate: string | Date | null,
-    newEndDate: string | Date | null
+    newStartDate: Date | null,
+    newEndDate: Date | null
   ) => Promise<number>;
 }
 
@@ -19,8 +19,8 @@ export const useChangeDate = create<ChangeDateState>((set) => ({
   isError: null,
   changeDate: async (
     nameToAlter: string,
-    newStartDate?: string | Date | null,
-    newEndDate?: string | Date | null
+    newStartDate?: Date | null,
+    newEndDate?: Date | null
   ) => {
     set({ isLoading: true });
     try {
@@ -41,13 +41,10 @@ export const useChangeDate = create<ChangeDateState>((set) => ({
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // const json = await response.json();
 
-      // console.log(json);
       console.log("Start Date Change: " + newStartDate);
       console.log("End Date Change: " + newEndDate);
 
-      //   return json;
       return 0;
     } catch (error) {
       console.log("Error occurred:", error);

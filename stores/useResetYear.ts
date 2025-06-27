@@ -1,37 +1,35 @@
 import { create } from "zustand";
 const API_URL =
-  "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/send-fast";
+  "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/re-calc-data";
 
 interface DataStoreState {
-  data: number;
   isLoading: boolean;
   isError: boolean | null;
-  fetchData: () => Promise<JSON>;
+  resetData: (year: Number) => void;
 }
 
-export const useDataStore = create<DataStoreState>((set) => ({
-  data: 0,
+export const useResetYear = create<DataStoreState>((set) => ({
   isLoading: false,
   isError: null,
-  fetchData: async () => {
+  resetData: async (year: Number) => {
     set({ isLoading: true });
     try {
       if (!API_URL) {
         throw new Error("API_URL is not defined");
       }
       const response = await fetch(API_URL, {
-        method: "GET",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ year }),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const json = await response.json();
-
-      return json;
     } catch (error) {
       console.log("Error occurred:", error);
       set({ isLoading: false, isError: true });
-      return -1;
     } finally {
       set({ isLoading: false });
     }

@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import zustandStorage from "./storage";
 import { weatherMetrics } from "@/constants/Metrics";
 
 export interface FilterState {
@@ -33,7 +32,6 @@ export const useMetric = create<FilterStore>((set) => ({
     set(
       produce((state) => {
         const d = state.datas.find((f: FilterState) => f.name == name);
-        // const d = state.datas.find((f) => f.name == name);
         console.log(`Name: ${name}`);
         console.log(`Data: ${newData}`);
         console.log(``);

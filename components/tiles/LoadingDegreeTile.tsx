@@ -1,20 +1,6 @@
-import React, { Children, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-const { width } = Dimensions.get("window");
-import {
-  tileTextColorPrimary,
-  spotifyDarkGrey,
-  spotifyLightGrey,
-  spotifyWhite,
-  spotifyGreen,
-} from "../../constants/Colors";
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { spotifyWhite } from "../../constants/Colors";
 
 export const LoadingDegreeTiles = () => {
   return (
@@ -39,17 +25,6 @@ export const LoadingDegreeTiles = () => {
 };
 
 const styles = StyleSheet.create({
-  tile: {
-    flexDirection: "row", // Display tiles in a row (left side and right side)
-    marginTop: 10,
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    flex: 1,
-    height: 100,
-    backgroundColor: spotifyDarkGrey || "#fff",
-  },
   loadingTile: {
     // Apply transparent grey overlay when loading
     backgroundColor: "#f0f0f0",
@@ -78,12 +53,6 @@ const styles = StyleSheet.create({
     color: spotifyWhite,
     textAlign: "left",
   },
-  degreeDayMetric: {
-    fontSize: 40,
-    fontWeight: 400,
-    color: spotifyWhite,
-    textAlign: "right",
-  },
   degreeDayNoData: {
     fontSize: 20,
     fontWeight: 400,
@@ -101,8 +70,5 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: spotifyWhite,
     textAlign: "center",
-  },
-  colon: {
-    color: spotifyGreen,
   },
 });

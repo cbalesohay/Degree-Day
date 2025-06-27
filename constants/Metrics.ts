@@ -6,12 +6,13 @@ export const pestNames = [
 ];
 
 export const weatherMetrics = [
-  "dayLow",
-  "dayHigh",
-  "dayAverage",
-  "current",
-  "dayRainfall",
-  "totalRainfall",
+  "day_low",
+  "day_high",
+  "day_average",
+  "curr_temp",
+  "curr_humidity",
+  "day_rainfall",
+  "total_rainfall",
 ];
 
 export const location = "Sandpoint, ID";

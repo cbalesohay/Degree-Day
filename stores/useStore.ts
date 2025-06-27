@@ -1,16 +1,17 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import zustandStorage from "./storage";
-import { persist } from "zustand/middleware";
 import { pestNames } from "@/constants/Metrics";
 
 export interface FilterState {
   name: string;
-  degreeDays: number;
-  dailyDegreeDays: number;
-  totalDegreeDays: number;
-  startDate: Date | null;
-  endDate: Date | null;
+  degree_days: number;
+  daily_degree_days: number;
+  total_degree_days: number;
+  start_date: Date | null;
+  end_date: Date | null;
+  temp_base: number;
+  temp_max: number;
+  type: string;
   isLoading: boolean;
   isSelected: boolean;
 }
@@ -20,23 +21,35 @@ interface FilterStore {
   setFilters: (filters: FilterState[]) => void;
   updateDegreeDays: (
     name: FilterState["name"],
-    degreeDays: FilterState["degreeDays"]
+    degree_days: FilterState["degree_days"]
   ) => void;
   updateDailyDegreeDays: (
     name: FilterState["name"],
-    dailyDegreeDays: FilterState["dailyDegreeDays"]
+    daily_degree_days: FilterState["daily_degree_days"]
   ) => void;
   updateTotalDegreeDays: (
     name: FilterState["name"],
-    totalDegreeDays: FilterState["totalDegreeDays"]
+    total_degree_days: FilterState["total_degree_days"]
   ) => void;
   updateStartDate: (
     name: FilterState["name"],
-    startDate: FilterState["startDate"]
+    start_date: FilterState["start_date"]
   ) => void;
   updateEndDate: (
     name: FilterState["name"],
-    endDate: FilterState["endDate"]
+    end_date: FilterState["end_date"]
+  ) => void;
+  updateTempBase: (
+    name: FilterState["name"],
+    temp_base: FilterState["temp_base"]
+  ) => void;
+  updateTempMax: (
+    name: FilterState["name"],
+    temp_max: FilterState["temp_max"]
+  ) => void;
+  updateType: (
+    name: FilterState["name"],
+    type: FilterState["type"]
   ) => void;
   updateSelected: (name: FilterState["name"]) => void;
   resetSelected: (name: FilterState["name"]) => void;
@@ -46,14 +59,17 @@ interface FilterStore {
 const initialFilters: FilterState[] = [
   ...pestNames.map((name) => ({
     name: name,
-    degreeDays: -1,
-    dailyDegreeDays: -1,
-    totalDegreeDays: -1,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
+    degree_days: -1,
+    daily_degree_days: -1,
+    total_degree_days: -1,
+    start_date: null as Date | null,
+    end_date: null as Date | null,
+    type: "",
+    temp_base: -1,
+    temp_max: -1,
     isLoading: true,
     isSelected: false,
-  }))
+  })),
 ];
 
 export const useStore = create<FilterStore>((set) => ({
@@ -66,8 +82,8 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(`Name: ${name}`);
         console.log(`Degree Days: ${newDegreeDays}`);
         console.log(``);
-        if (filter && filter.degreeDays !== newDegreeDays)
-          filter.degreeDays = newDegreeDays;
+        if (filter && filter.degree_days !== newDegreeDays)
+          filter.degree_days = newDegreeDays;
       })
     ),
   updateDailyDegreeDays: (name, newDailyDegreeDays) =>
@@ -77,8 +93,8 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(`Name: ${name}`);
         console.log(`Daily Degree Days: ${newDailyDegreeDays}`);
         console.log(``);
-        if (filter && filter.dailDegreeDays !== newDailyDegreeDays)
-          filter.dailyDegreeDays = newDailyDegreeDays;
+        if (filter && filter.daily_degree_days !== newDailyDegreeDays)
+          filter.daily_degree_days = newDailyDegreeDays;
       })
     ),
   updateTotalDegreeDays: (name, newTotalDegreeDays) =>
@@ -88,8 +104,8 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(`Name: ${name}`);
         console.log(`Total Degree Days: ${newTotalDegreeDays}`);
         console.log(``);
-        if (filter && filter.totalDegreeDays !== newTotalDegreeDays)
-          filter.totalDegreeDays = newTotalDegreeDays;
+        if (filter && filter.total_degree_days !== newTotalDegreeDays)
+          filter.total_degree_days = newTotalDegreeDays;
       })
     ),
   updateStartDate: (name, newStartDate) =>
@@ -99,8 +115,8 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(`Name: ${name}`);
         console.log(`New Start Date: ${newStartDate}`);
         console.log(``);
-        if (filter && filter.startDate !== newStartDate)
-          filter.startDate = newStartDate;
+        if (filter && filter.start_date !== newStartDate)
+          filter.start_date = newStartDate;
       })
     ),
   updateEndDate: (name, newEndDate) =>
@@ -110,8 +126,41 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(`Name: ${name}`);
         console.log(`New End Date: ${newEndDate}`);
         console.log(``);
-        if (filter && filter.endDate !== newEndDate)
-          filter.endDate = newEndDate;
+        if (filter && filter.end_date !== newEndDate)
+          filter.end_date = newEndDate;
+      })
+    ),
+  updateTempBase: (name, newBaseTemp) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Base Temp: ${newBaseTemp}`);
+        console.log(``);
+        if (filter && filter.temp_base !== newBaseTemp)
+          filter.temp_base = newBaseTemp;
+      })
+    ),
+  updateTempMax: (name, newMaxTemp) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Mac Temp: ${newMaxTemp}`);
+        console.log(``);
+        if (filter && filter.temp_max !== newMaxTemp)
+          filter.temp_max = newMaxTemp;
+      })
+    ),
+  updateType: (name, newType) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Type: ${newType}`);
+        console.log(``);
+        if (filter && filter.type !== newType)
+          filter.type = newType;
       })
     ),
   updateSelected: (name) =>

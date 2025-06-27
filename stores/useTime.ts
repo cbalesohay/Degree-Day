@@ -1,10 +1,9 @@
 import { create } from "zustand";
 import { produce } from "immer";
-// import zustandStorage from "./storage";
 
 export interface FilterState {
   name: string;
-  date: Date | undefined;
+  date: Date | null;
   displayDate: string;
   isLoading: boolean;
   isSelected: boolean;
