@@ -64,3 +64,7 @@ ui
 - useResetYear.ts (Sends a POST request to backend with new data to reset specific year)
 - useStore.ts (Where local Metric data is changed and updated for Zustand for the applications state)
 - useTime.ts (Where local time data is changed and updated for Zustand for the applications state)
+
+### To work on moving forward
+- Improve upon the overall UI of the application where seen fit
+- For IndividualInfoPage.tsx make altering the info more user friendly as well as adding in the capability to do so for other info
