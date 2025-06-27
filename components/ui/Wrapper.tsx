@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Dimensions,
-  RefreshControl,
-} from "react-native";
-
-const { height } = Dimensions.get("window");
+import { SafeAreaView, ScrollView, View, RefreshControl } from "react-native";
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -16,33 +7,21 @@ type WrapperProps = {
   onRefresh?: () => void;
 };
 
-
 export const Wrapper = ({ children, refreshing, onRefresh }: WrapperProps) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={{ flexGrow: 1 }}
         refreshControl={
           onRefresh ? (
             <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
-          ) : undefined}
+          ) : undefined
+        }
       >
-        <View style={styles.innerView}>{children}</View>
+        <View style={{ flex: 1 }}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  innerView: {
-    flex: 1,
-  },
-});

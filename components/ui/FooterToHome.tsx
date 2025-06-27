@@ -1,36 +1,14 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import {
-  backgroundColorPrimary,
-  spotifyBlack,
-  spotifyWhite,
-} from "../../constants/Colors";
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-// import {SafeAreaView} from 'react-native-safe-area-context';
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { spotifyWhite } from "../../constants/Colors";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { useStore } from "../../stores/useStore";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import { useRouter } from "expo-router";
 
-type footer = {
-  type: string;
-};
-
-export const FooterToHome = ({ name}: any) => {
+export const FooterToHome = ({ name }: any) => {
   const router = useRouter();
 
-  // Degree day store
-  const { filters } = useStore();
   const resetSelected = useStore((state) => state.resetSelected);
 
   const navToHome = () => {

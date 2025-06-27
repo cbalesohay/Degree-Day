@@ -1,7 +1,5 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import zustandStorage from "./storage";
-import { persist } from "zustand/middleware";
 import { pestNames } from "@/constants/Metrics";
 
 export interface FilterState {
@@ -13,6 +11,7 @@ export interface FilterState {
   end_date: Date | null;
   temp_base: number;
   temp_max: number;
+  type: string;
   isLoading: boolean;
   isSelected: boolean;
 }
@@ -48,6 +47,10 @@ interface FilterStore {
     name: FilterState["name"],
     temp_max: FilterState["temp_max"]
   ) => void;
+  updateType: (
+    name: FilterState["name"],
+    type: FilterState["type"]
+  ) => void;
   updateSelected: (name: FilterState["name"]) => void;
   resetSelected: (name: FilterState["name"]) => void;
   resetFilters: () => void;
@@ -61,6 +64,7 @@ const initialFilters: FilterState[] = [
     total_degree_days: -1,
     start_date: null as Date | null,
     end_date: null as Date | null,
+    type: "",
     temp_base: -1,
     temp_max: -1,
     isLoading: true,
@@ -146,6 +150,17 @@ export const useStore = create<FilterStore>((set) => ({
         console.log(``);
         if (filter && filter.temp_max !== newMaxTemp)
           filter.temp_max = newMaxTemp;
+      })
+    ),
+  updateType: (name, newType) =>
+    set(
+      produce((state) => {
+        const filter = state.filters.find((f: FilterState) => f.name == name);
+        console.log(`Name: ${name}`);
+        console.log(`New Type: ${newType}`);
+        console.log(``);
+        if (filter && filter.type !== newType)
+          filter.type = newType;
       })
     ),
   updateSelected: (name) =>

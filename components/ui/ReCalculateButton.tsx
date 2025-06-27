@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Button } from "react-native";
-import { useStore } from "../../stores/useStore";
 import { useFetchLogic } from "@/hooks/useFetchLogic";
 import { useResetYear } from "../../stores/useResetYear";
 import { TouchableOpacity } from "react-native";
-import { text } from "@fortawesome/fontawesome-svg-core";
 import { spotifyLightGrey } from "@/constants/Colors";
 
 const ConfirmationButtons = ({

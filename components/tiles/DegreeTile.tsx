@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import {
   spotifyDarkGrey,
   spotifyWhite,
@@ -34,8 +28,7 @@ export const DegreeTiles = ({
 }: tile) => {
   const router = useRouter();
 
-  // Degree day store
-  const filters = useStore().filters;
+  // Store
   const updateSelected = useStore((state) => state.updateSelected);
 
   const [noData, setNoData] = useState(true);
@@ -53,14 +46,6 @@ export const DegreeTiles = ({
         temp_low,
         temp_high,
       },
-      // router.push({
-      //   pathname: "/SwipablePages",
-      //   params: {
-      //     name,
-      //     degreeDays,
-      //     temp_low,
-      //     temp_high,
-      //   },
     });
   };
 

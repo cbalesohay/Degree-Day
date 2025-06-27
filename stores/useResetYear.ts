@@ -1,6 +1,4 @@
 import { create } from "zustand";
-// const API_URL =
-//   "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/ReCalcData";
 const API_URL =
   "http://ec2-35-95-17-225.us-west-2.compute.amazonaws.com:8080/re-calc-data";
 

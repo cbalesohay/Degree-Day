@@ -8,7 +8,7 @@ export const pestNames = [
 export const weatherMetrics = [
   "day_low",
   "day_high",
-  "day_Average",
+  "day_average",
   "curr_temp",
   "curr_humidity",
   "day_rainfall",

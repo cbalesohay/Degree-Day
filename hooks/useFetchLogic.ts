@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { AppState } from "react-native";
 import { useStore } from "../stores/useStore";
 import { useMetric } from "../stores/useMetric";
 import { useDataStore } from "../stores/useFetch";
@@ -22,6 +21,7 @@ export const useFetchLogic = () => {
     updateEndDate,
     updateTempBase,
     updateTempMax,
+    updateType,
   } = useStore();
   const { datas, updateDegrees } = useMetric();
   const { times, updateDisplayDate } = useTime();
@@ -46,8 +46,6 @@ export const useFetchLogic = () => {
     try {
       const result: any = await fetchData();
 
-      // console.log("API Response:", result.data.pests);
-
       // Check if result is valid before updating state
       if (!result || result.message === "Error" || typeof result !== "object") {
         console.log("Invalid API response:", result);
@@ -63,7 +61,9 @@ export const useFetchLogic = () => {
 
       // Update data for each pest
       pestNames.forEach((pest) => {
-        const pestMap = Object.fromEntries(result.data.metrics.map((p: any) => [p.name, p]));
+        const pestMap = Object.fromEntries(
+          result.data.metrics.map((p: any) => [p.name, p])
+        );
         const pestData = pestMap[pest];
         if (pestData) {
           updateDailyDegreeDays(pest, Math.round(pestData.degree_days_daily));
@@ -72,6 +72,7 @@ export const useFetchLogic = () => {
           updateEndDate(pest, new Date(pestData.degree_days_date_end));
           updateTempBase(pest, Math.round(pestData.temp_base));
           updateTempMax(pest, Math.round(pestData.temp_max));
+          updateType(pest, pestData.type);
         }
       });
 

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import {
   spotifyDarkGrey,
-  spotifyWhite,
-  spotifyGreen,
   spotifyLightGrey,
 } from "../../constants/Colors";
-import { LoadingDegreeTiles } from "./LoadingDegreeTile";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useStore } from "../../stores/useStore";
 import { useChangeDate } from "@/stores/useChangeDate";
@@ -17,7 +14,6 @@ type settingsTileProp = {
 };
 
 export const SettingsTile = ({ inputName }: settingsTileProp) => {
-  const [loading, setLoading] = useState(true);
   const currentYear = new Date().getFullYear();
 
   // Degree day store
@@ -44,22 +40,48 @@ export const SettingsTile = ({ inputName }: settingsTileProp) => {
   const [isEditingEnd, setIsEditingEnd] = useState(false);
   const [isEditingBase, setIsEditingBase] = useState(false);
   const [isEditingMax, setIsEditingMax] = useState(false);
+  const [isEditingType, setIsEditingType] = useState(false);
 
   const filter = filters.find((n) => n.name === inputName);
+  const type = filter?.type ?? "Unknown";
   const startDate = filter?.start_date ?? new Date(`${currentYear}-01-02`);
   const endDate = filter?.end_date ?? new Date(`${currentYear}-01-02`);
 
   return (
     <>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", width: "70%" }}>
         <View
           style={{
-            backgroundColor: "#333",
+            backgroundColor: spotifyDarkGrey,
             padding: 10,
             borderRadius: 20,
-            width: "70%",
+            width: "100%",
           }}
         >
+          {/* Type Row */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 18 }}>Type:</Text>
+            {isEditingType ? (
+              <Text style={{ color: "white", fontSize: 16 }}>Text Editing</Text>
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ color: "white", fontSize: 16 }}>{type}</Text>
+              </View>
+            )}
+
+            <TouchableOpacity onPress={() => setIsEditingType(!isEditingType)}>
+              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+                {isEditingType ? "X" : "Edit"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           {/* Start Date Row */}
           <View
             style={{
@@ -203,29 +225,6 @@ export const SettingsTile = ({ inputName }: settingsTileProp) => {
             marginBottom: 12,
           }}
         >
-          {/* <TouchableOpacity onPress={() => setIsEditingStart(!isEditingStart)}>
-            <Text style={{ color: spotifyLightGrey }}>
-              {isEditingStart ? "X" : "Edit"}
-            </Text>
-          </TouchableOpacity> */}
-
-          {/* <TouchableOpacity onPress={() => setIsEditingEnd(!isEditingEnd)}>
-            <Text style={{ color: spotifyLightGrey }}>
-              {isEditingEnd ? "X" : "Edit"}
-            </Text>
-          </TouchableOpacity> */}
-
-          {/* <TouchableOpacity onPress={() => setIsEditingBase(!isEditingBase)}>
-            <Text style={{ color: spotifyLightGrey }}>
-              {isEditingBase ? "X" : "Edit"}
-            </Text>
-          </TouchableOpacity> */}
-
-          {/* <TouchableOpacity onPress={() => setIsEditingMax(!isEditingMax)}>
-            <Text style={{ color: spotifyLightGrey }}>
-              {isEditingMax ? "X" : "Edit"}
-            </Text>
-          </TouchableOpacity> */}
         </View>
       </View>
     </>
