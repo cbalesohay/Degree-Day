@@ -70,8 +70,8 @@ export const WeatherTile = ({ navigation }: any) => {
           </>
         </Text>
 
-        <View style={styles.smallTileContainer}>
-          <Text style={{ padding: 5 }}>
+        {/* <View style={styles.smallTileContainer}>
+          <View >
             <IndividualTile
               name="Rain"
               metric1={
@@ -81,15 +81,37 @@ export const WeatherTile = ({ navigation }: any) => {
                 datas.find((t) => t.name === "total_rainfall")?.data ?? null
               }
             />
-          </Text>
-          <Text style={{ padding: 5 }}>
+          </View>
+          <View >
             <IndividualTile
               name="Humidity"
               metric1={
                 datas.find((t) => t.name === "curr_humidity")?.data ?? null
               }
             />
-          </Text>
+          </View>
+        </View> */}
+
+        <View style={styles.smallTileContainer}>
+          <View style={styles.tileWrapper}>
+            <IndividualTile
+              name="Rain"
+              metric1={
+                datas.find((t) => t.name === "day_rainfall")?.data ?? null
+              }
+              metric2={
+                datas.find((t) => t.name === "total_rainfall")?.data ?? null
+              }
+            />
+          </View>
+          <View style={styles.tileWrapper}>
+            <IndividualTile
+              name="Humidity"
+              metric1={
+                datas.find((t) => t.name === "curr_humidity")?.data ?? null
+              }
+            />
+          </View>
         </View>
       </View>
     </>
@@ -97,21 +119,19 @@ export const WeatherTile = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  smallTileContainer: {
-    flex: 1,
-    justifyContent: "center",
-    flexDirection: "row",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      width: 5,
-      height: 4,
-    },
-  },
   sectionTitle: {
     fontSize: 24,
     fontWeight: "600",
     textAlign: "center",
     color: "white",
+  },
+  smallTileContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 10,
+    gap: 10,
+  },
+  tileWrapper: {
+    flex: 1,
   },
 });

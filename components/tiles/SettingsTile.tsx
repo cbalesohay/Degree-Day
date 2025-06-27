@@ -1,40 +1,61 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import {
-  spotifyDarkGrey,
-  spotifyLightGrey,
-} from "../../constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { spotifyDarkGrey, spotifyLightGrey } from "../../constants/Colors";
 import { useStore } from "../../stores/useStore";
 import { useChangeDate } from "@/stores/useChangeDate";
 import { useFetchLogic } from "@/hooks/useFetchLogic";
 
-type settingsTileProp = {
+type SettingsTileProps = {
   inputName: string;
 };
 
-export const SettingsTile = ({ inputName }: settingsTileProp) => {
+type EditableRowProps = {
+  label: string;
+  isEditing: boolean;
+  value: string | JSX.Element;
+  onEditPress: () => void;
+  editingComponent?: JSX.Element;
+};
+
+const EditableRow = ({
+  label,
+  isEditing,
+  value,
+  onEditPress,
+  editingComponent,
+}: EditableRowProps) => (
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginVertical: 5,
+    }}
+  >
+    <Text style={{ color: "white", fontSize: 18 }}>{label}</Text>
+    {isEditing ? editingComponent ?? <Text style={{ color: "white" }}>Editing...</Text> : (
+      <View style={{ flexDirection: "row" }}>
+        {typeof value === "string" ? (
+          <Text style={{ color: "white", fontSize: 16 }}>{value}</Text>
+        ) : (
+          value
+        )}
+      </View>
+    )}
+    <TouchableOpacity onPress={onEditPress}>
+      <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
+        {isEditing ? "X" : "Edit"}
+      </Text>
+    </TouchableOpacity>
+  </View>
+);
+
+export const SettingsTile = ({ inputName }: SettingsTileProps) => {
   const currentYear = new Date().getFullYear();
-
-  // Degree day store
   const filters = useStore().filters;
-
   const changeDate = useChangeDate((state) => state.changeDate);
-  const { fetchDataAndUpdate } = useFetchLogic(); // Fetch logic from your hook
-
-  const fetch = async () => {
-    try {
-      console.log("Fetching data...");
-
-      // You can now call any necessary fetch/update logic from your custom hook
-      await fetchDataAndUpdate(); // This will trigger your fetch data logic
-
-      // If necessary, you can also manually call other update functions here.
-      // Example: await updateDegreeDays(pest, data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const { fetchDataAndUpdate } = useFetchLogic();
 
   const [isEditingStart, setIsEditingStart] = useState(false);
   const [isEditingEnd, setIsEditingEnd] = useState(false);
@@ -46,187 +67,99 @@ export const SettingsTile = ({ inputName }: settingsTileProp) => {
   const type = filter?.type ?? "Unknown";
   const startDate = filter?.start_date ?? new Date(`${currentYear}-01-02`);
   const endDate = filter?.end_date ?? new Date(`${currentYear}-01-02`);
+  const tempBase = filter?.temp_base ?? 0;
+  const tempMax = filter?.temp_max ?? 0;
+
+  const fetch = async () => {
+    try {
+      await fetchDataAndUpdate();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   return (
-    <>
-      <View style={{ flexDirection: "row", width: "70%" }}>
-        <View
-          style={{
-            backgroundColor: spotifyDarkGrey,
-            padding: 10,
-            borderRadius: 20,
-            width: "100%",
-          }}
-        >
-          {/* Type Row */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Type:</Text>
-            {isEditingType ? (
-              <Text style={{ color: "white", fontSize: 16 }}>Text Editing</Text>
-            ) : (
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ color: "white", fontSize: 16 }}>{type}</Text>
-              </View>
-            )}
+    <View style={{ flex: 1, justifyContent: "center", flexDirection: "row" }}>
+      <View
+        style={{
+          backgroundColor: spotifyDarkGrey,
+          padding: 10,
+          borderRadius: 20,
+          width: "100%",
+        }}
+      >
+        <EditableRow
+          label="Type:"
+          isEditing={isEditingType}
+          value={type}
+          onEditPress={() => setIsEditingType(!isEditingType)}
+          editingComponent={<Text style={{ color: "white" }}>Editing...</Text>}
+        />
 
-            <TouchableOpacity onPress={() => setIsEditingType(!isEditingType)}>
-              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
-                {isEditingType ? "X" : "Edit"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+        <EditableRow
+          label="Date Start:"
+          isEditing={isEditingStart}
+          value={startDate.toISOString().slice(0, 10)}
+          onEditPress={() => setIsEditingStart(!isEditingStart)}
+          editingComponent={
+            <DateTimePicker
+              value={startDate}
+              mode="date"
+              display="default"
+              minimumDate={new Date(`${currentYear}-01-02`)}
+              maximumDate={endDate}
+              onChange={async (_, selectedDate) => {
+                setIsEditingStart(false);
+                if (selectedDate) {
+                  selectedDate.setHours(0, 0, 0, 0);
+                  await changeDate(inputName, selectedDate, null);
+                  await fetch();
+                }
+              }}
+              textColor="white"
+            />
+          }
+        />
 
-          {/* Start Date Row */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Date Start:</Text>
-            {isEditingStart ? (
-              <DateTimePicker
-                value={startDate}
-                mode="date"
-                display="default"
-                minimumDate={new Date(`${currentYear}-01-02`)}
-                maximumDate={endDate}
-                onChange={async (_, selectedDate) => {
-                  setIsEditingStart(false);
-                  if (selectedDate) {
-                    selectedDate.setHours(0, 0, 0, 0);
-                    try {
-                      await changeDate(inputName, selectedDate, null);
-                      await fetch(); // Fetch new data after changing the date
-                    } catch (error) {
-                      console.error("Error changing start date:", error);
-                    }
-                  }
-                }}
-                textColor="white"
-              />
-            ) : (
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ color: "white", fontSize: 16 }}>
-                  {startDate.toISOString().slice(0, 10)}
-                </Text>
-              </View>
-            )}
+        <EditableRow
+          label="Date End:"
+          isEditing={isEditingEnd}
+          value={endDate.toISOString().slice(0, 10)}
+          onEditPress={() => setIsEditingEnd(!isEditingEnd)}
+          editingComponent={
+            <DateTimePicker
+              value={endDate}
+              mode="date"
+              display="default"
+              minimumDate={startDate}
+              maximumDate={new Date(`${currentYear + 1}-01-01`)}
+              onChange={async (_, selectedDate) => {
+                setIsEditingEnd(false);
+                if (selectedDate) {
+                  selectedDate.setHours(0, 0, 0, 0);
+                  await changeDate(inputName, null, selectedDate);
+                  await fetch();
+                }
+              }}
+              textColor="white"
+            />
+          }
+        />
 
-            <TouchableOpacity
-              onPress={() => setIsEditingStart(!isEditingStart)}
-            >
-              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
-                {isEditingStart ? "X" : "Edit"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+        <EditableRow
+          label="Temp Base:"
+          isEditing={isEditingBase}
+          value={`${tempBase}°`}
+          onEditPress={() => setIsEditingBase(!isEditingBase)}
+        />
 
-          {/* End Date Row */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Date End:</Text>
-            {isEditingEnd ? (
-              <DateTimePicker
-                value={endDate}
-                mode="date"
-                display="default"
-                minimumDate={startDate}
-                maximumDate={new Date(`${currentYear + 1}-01-01`)}
-                onChange={async (_, selectedDate) => {
-                  setIsEditingEnd(false);
-                  if (selectedDate) {
-                    selectedDate.setHours(0, 0, 0, 0);
-                    try {
-                      await changeDate(inputName, null, selectedDate);
-                      await fetch(); // Fetch new data after changing the date
-                    } catch (error) {
-                      console.error("Error changing end date:", error);
-                    }
-                  }
-                }}
-                textColor="white"
-              />
-            ) : (
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ color: "white", fontSize: 16 }}>
-                  {endDate.toISOString().slice(0, 10)}
-                </Text>
-              </View>
-            )}
-
-            <TouchableOpacity onPress={() => setIsEditingEnd(!isEditingEnd)}>
-              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
-                {isEditingEnd ? "X" : "Edit"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Temp Base Row */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Temp Base:</Text>
-            <Text style={{ color: "white", fontSize: 16 }}>
-              {isEditingBase ? 0 : filter?.temp_base}°
-            </Text>
-
-            <TouchableOpacity onPress={() => setIsEditingBase(!isEditingBase)}>
-              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
-                {isEditingBase ? "X" : "Edit"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Temp Max Row */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Temp Max:</Text>
-            <Text style={{ color: "white", fontSize: 16 }}>
-              {isEditingMax ? 0 : filter?.temp_max}°
-            </Text>
-
-            <TouchableOpacity onPress={() => setIsEditingMax(!isEditingMax)}>
-              <Text style={{ color: spotifyLightGrey, fontSize: 16 }}>
-                {isEditingMax ? "X" : "Edit"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Edit Button Row */}
-        <View
-          style={{
-            flexDirection: "column",
-            paddingLeft: 10,
-            justifyContent: "space-between",
-            marginTop: 13,
-            marginBottom: 12,
-          }}
-        >
-        </View>
+        <EditableRow
+          label="Temp Max:"
+          isEditing={isEditingMax}
+          value={`${tempMax}°`}
+          onEditPress={() => setIsEditingMax(!isEditingMax)}
+        />
       </View>
-    </>
+    </View>
   );
 };

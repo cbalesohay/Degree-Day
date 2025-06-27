@@ -1,7 +1,5 @@
 ## Precision Agriculture Project
-
 # Goal: Develop a full stack mobile application to integrate wirelessly sensed data into site specific degree day models.
-
 - Researched agriculture extension degree day model.
 - Developing front-end and back-end React Native mobile application.
 - Developing React Native / MongoDB integration for data flow.
@@ -14,19 +12,55 @@
 <img src="https://github.com/user-attachments/assets/29fefe07-dcf7-44bb-be5d-655d5a9e38ee" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 <img src="https://github.com/user-attachments/assets/a02e395c-50b3-4f78-94ab-1f53fbed039e" width="250" height="550" title="iPhone 16 Pro Screenshot" alt="iPhone 16 Pro Screenshot"/>
 
-
-<!-- ### Android
-<img src="https://github.com/user-attachments/assets/75258a77-90f6-4d4c-8483-0f93ee538c38" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/>
-<img src="https://github.com/user-attachments/assets/e18002a9-1827-4adc-8e4a-a2983111d45d" width="250" height="550" title="Android Screenshot" alt="Android Screenshot"/> -->
-
-
-
 ## Front-End
-
 The front end of this project is a React Native application written using TypeScript. The tought behind making the switch from JavaScript to TypeScript was to type check the information. 
 
 # Front-End tech used
-
 - React Native
 - TypeScript
 - Zustand
+
+# Structure
+### Folders
+#### App
+Theme
+- _layout.tsx
+
+Pages
+- index.tsx
+- individualIntoScreen.tsx
+
+#### Components
+tiles
+- AddMetric.tsx
+- DegreeTile.tsx
+- IndividualTile.tsx
+- LoadingDegreeTile.tsx
+- SettingsTile.tsx
+- WeatherTile.tsx
+
+ui
+- FooterToHome.tsx
+- IconSymbol.ios.tsx
+- ReCalculateButton.tsx (Button for ui for re-calculating data)
+- SelectDate.tsx (Used to select a date)
+- Wrapper.tsx (Used to wrap other files for consistent look)
+
+#### Constants
+- Colors.ts (Used for having a central location of colors used)
+- Metrics.ts (Used for looping and displaying data: Should change this to be dynamic from the backend instead)
+
+#### Hooks
+- useColorScheme.ts
+- useColorScheme.web.ts
+- useFetchLogic.ts (Used for housing the fetching logic from the backend and storing the data in Zustand)
+- useThemeColor.ts
+
+#### Stores
+- storage.ts 
+- useChangeDate.ts (Sends a POST request to backend with new data to change date of metric)
+- useFetch.ts (Get request to get most up-to-date data)
+- useMetric.ts
+- useResetYear.ts (Sends a POST request to backend with new data to reset specific year)
+- useStore.ts (Where local Metric data is changed and updated for Zustand for the applications state)
+- useTime.ts (Where local time data is changed and updated for Zustand for the applications state)

@@ -23,7 +23,7 @@ export const IndividualTile = ({ name, metric1, metric2 }: tile) => {
 
   return (
     <>
-      <TouchableOpacity style={[styles.tile]}>
+      <View style={[styles.tile]}>
         {!loading ? (
           <View style={styles.tile}>
             {/* Left side: Display the name, location, and temperature */}
@@ -60,33 +60,32 @@ export const IndividualTile = ({ name, metric1, metric2 }: tile) => {
         ) : (
           <LoadingDegreeTiles />
         )}
-      </TouchableOpacity>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   tile: {
-    marginTop: 10,
+    flex: 1,
     borderRadius: 20,
-    height: 100,
-    width: 150,
-    backgroundColor: spotifyDarkGrey || "#fff",
+    backgroundColor: spotifyDarkGrey,
+    paddingVertical: 10,
   },
   tileContainer: {
     flex: 1,
-
-    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   name: {
     fontSize: 20,
-    fontWeight: 800,
+    fontWeight: "800",
     color: spotifyWhite,
     textAlign: "center",
   },
   metric: {
     fontSize: 15,
-    fontWeight: 400,
+    fontWeight: "400",
     color: spotifyWhite,
     textAlign: "center",
   },

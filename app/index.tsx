@@ -24,11 +24,11 @@ export default function DegreeDayScreen() {
     };
 
     const interval = setInterval(() => {
-      fetch(); // Call it again every set interval (e.g., every 5 minutes)
+      fetch(); // Call it again every set interval (e.g., every 15 minutes)
     }, 15 * 60 * 1000); // every 15 minutes
 
     return () => clearInterval(interval); // Cleanup on component unmount
-  }, [filters]); // Re-run effect if filters change (or add other necessary dependencies)
+  }, [filters]); 
 
   return (
     <>
